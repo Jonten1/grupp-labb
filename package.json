@@ -1,19 +1,19 @@
 {
-  "name": "backend-grupp-labb",
-  "version": "1.0.0",
-  "description": "",
-  "main": "connection.js",
-  "scripts": {
-    "test": "\u001b[A\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[server\u001b[C\u001b[C\u001b[C",
-    "start": "node server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.20.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.3",
-    "mongodb": "^4.5.0",
-    "mysql": "^2.18.1"
-  }
+	"name": "backend-grupp-labb",
+	"version": "1.0.0",
+	"description": "",
+	"main": "connection.js",
+	"scripts": {
+		"test": "\u001b[A\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[server\u001b[C\u001b[C\u001b[C",
+		"start": "node server.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.20.0",
+		"cors": "^2.8.5",
+		"express": "^4.17.3",
+		"mongodb": "^4.5.0",
+		"mysql": "^2.18.1"
+	}
 }
