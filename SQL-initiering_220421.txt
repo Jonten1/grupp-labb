@@ -6,7 +6,13 @@ UPPDATERINGAR
 --------------------------------------
 15:47 den 21 april 2022
 -- Justeringar
+--------------------------------------
+15:59 den 21 april 2022
+-- Lade till NOT NULL på många ställen efter tips från Jerry
+--------------------------------------
 
+TODO:
+Vi borde nog uppdatera ER-diagrammet i Figma med aktuella namn här
 
 
 
@@ -19,6 +25,7 @@ Fem tabeller:
 		Kategori
 		Land
 --------------------------------------
+KOLUMNNAMNEN NEDAN HAR ÄNDRATS
 
 Film
 	FilmId
@@ -48,10 +55,14 @@ Land
 
 
 -- #################################################################################################
+-- #################################################################################################
 
-    S Q L
+    S Q L   B Ö R J A R
 
 -- #################################################################################################
+-- #################################################################################################
+
+
 
 
 -- #################################################################################################
@@ -68,7 +79,7 @@ create DATABASE projekt_filmdatabas2;
 
 CREATE TABLE land(
 landId INT NOT NULL AUTO_INCREMENT,
-landNamn VARCHAR(50),
+landNamn VARCHAR(50) NOT NULL,
 PRIMARY KEY (landID)
 );
 
@@ -76,21 +87,21 @@ DROP TABLE huvudrollsinnehavare;
 
 CREATE TABLE huvudrollsinnehavare(
 huvudrollId INT NOT NULL AUTO_INCREMENT,
-huvudrollNamn VARCHAR(50),
+huvudrollNamn VARCHAR(50) NOT NULL ,
 PRIMARY KEY (huvudrollId)
 );
 
 
 CREATE TABLE regissoer(
 regissoerId INT NOT NULL AUTO_INCREMENT,
-regissoerNamn VARCHAR(50),
+regissoerNamn VARCHAR(50) NOT NULL ,
 PRIMARY KEY (regissoerId)
 );
 
 
 CREATE TABLE kategori(
 kategoriId INT NOT NULL AUTO_INCREMENT,
-kategoriNamn VARCHAR(50),
+kategoriNamn VARCHAR(50)  NOT NULL,
 PRIMARY KEY (kategoriId)
 );
 
@@ -98,11 +109,11 @@ DROP TABLE film;
 
 CREATE TABLE film(
 filmId INT NOT NULL AUTO_INCREMENT,
-titel VARCHAR(50),
-filmKategoriId INT,
-filmLandId INT,
-filmHuvudrollsinnehavareId INT,
-filmRegissoerId INT,
+titel VARCHAR(50) NOT NULL ,
+filmKategoriId INT NOT NULL ,
+filmLandId INT NOT NULL,
+filmHuvudrollsinnehavareId INT NOT NULL,
+filmRegissoerId INT, NOT NULL,
 PRIMARY KEY (filmId),
 FOREIGN KEY (filmKategoriId)              REFERENCES kategori(kategoriId),
 FOREIGN KEY (filmLandId)                  REFERENCES land(landId),
