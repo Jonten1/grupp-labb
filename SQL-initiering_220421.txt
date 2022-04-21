@@ -1,0 +1,157 @@
+
+
+SENAST UPPDATERAD 14:44 den 21 april 2022
+
+
+
+1 Översikt 21 april:
+--------------------------------------
+Fem tabeller:
+	Film
+		Regissoer
+		Huvudrollsinnehavare
+		Kategori
+		Land
+--------------------------------------
+
+Film
+	FilmId
+	Titel
+	Kategori
+	Land
+	Huvudrollsinnehavare
+	Regissoer
+
+
+Huvudrollsinnehavare
+	HuvudrollId
+	HuvudrollNamn
+
+Regissör
+	RegissoerId
+	RegissoerNamn
+
+Kategori
+	KategoriId
+	KategoriNamn
+
+Land
+	LandNamn
+	LandId
+
+
+
+
+-- SKAPA DATABAS - om det behövs
+--
+create DATABASE projekt_filmdatabas2;
+
+-- SKAPA TABELLER
+-- 'film' kommer sist eftersom den kräver de andra
+--
+
+CREATE TABLE land(
+landId INT NOT NULL AUTO_INCREMENT,
+landNamn VARCHAR(50),
+
+PRIMARY KEY (landID)
+
+);
+
+DROP TABLE huvudrollsinnehavare;
+
+CREATE TABLE huvudrollsinnehavare(
+
+huvudrollId INT NOT NULL AUTO_INCREMENT,
+huvudrollNamn VARCHAR(50),
+PRIMARY KEY (huvudrollId)
+);
+
+
+CREATE TABLE regissoer(
+
+regissoerId INT NOT NULL AUTO_INCREMENT,
+regissoerNamn VARCHAR(50),
+PRIMARY KEY (regissoerId)
+
+);
+
+
+CREATE TABLE kategori(
+
+kategoriId INT NOT NULL AUTO_INCREMENT,
+kategoriNamn VARCHAR(50),
+
+PRIMARY KEY (kategoriId)
+);
+
+DROP TABLE film;
+CREATE TABLE film(
+  filmId INT NOT NULL AUTO_INCREMENT,
+  titel VARCHAR(50),
+
+  kategoriId INT,
+  landId INT,
+  huvudrollsinnehavareId INT,
+  regissoerId INT,
+
+  PRIMARY KEY (filmId),
+
+  FOREIGN KEY (kategoriId)              REFERENCES  kategori(kategoriId),
+  FOREIGN KEY (landId)                  REFERENCES  land(landId),
+  FOREIGN KEY (huvudrollsinnehavareId)  REFERENCES  huvudrollsinnehavare(huvudrollId),
+  FOREIGN KEY (regissoerId)             REFERENCES  regissoer(regissoerId)
+
+);
+
+
+-- ----------------------------------------------------
+-- Lite grundläggande insert-satser för att fylla upp bakgrundstabellerna (ej 'film')
+-- ----------------------------------------------------
+
+INSERT INTO kategori(kategoriNamn) VALUES('Drama'), ('Thriller'), ('Komedi'), ('Dokumentär'), ('Action'), ('Science fiction'), ('Skräck');
+SELECT * FROM kategori;
+
+INSERT INTO huvudrollsinnehavare(huvudrollNamn) VALUES('Kate Winslet'),('Charlize Theron'),('Bruce Willis'), ('Sigourney Weaver'),('Catherine Zeta-Jones'), ('Will Smith'), ('Keira Knightley'),('Al Pacino'),('Scarlett Johansson'), ('Sandra Bullock'),('Angelina Jolie'), ('Cameron Diaz'), ('Sandra Bullock');
+SELECT * FROM huvudrollsinnehavare;
+
+INSERT INTO regissoer(regissoerNamn) VALUES('David Lynch'), ('Stanley Kubrick'), ('Alfred Hitchcock'), ('Martin Scorsese'), ('Francis Ford Coppola'), ('Sergio Leone'), ('Ingmar Bergman'), ('Akira Kurosawa'), ('Tim Burton'), ('Quentin Tarantino');
+SELECT * FROM regissoer;
+
+-- Rättade till nedanstående
+INSERT INTO land(landNamn) VALUES('USA'), ('Sverige'), ('Storbritannien'), ('Frankrike'), ('Kanada');
+SELECT DISTINCT  landNamn FROM land;
+
+
+-- INSERT INTO film ()
+
+-- innerjoin behöver skrivas
+
+
+-- Stämmer inte på riktigt förstås... Kate Winslet var inte med i Hajen... :-)
+INSERT INTO film (filmId, titel, kategoriId, huvudrollsinnehavareId,landId)
+VALUES (1, 'Hajen', 7, 1, 1);
+
+
+-- SELECT-satser med innerjoin (hämta film plus ngn annan info från ngn annan tabell)
+
+SELECT film.titel, kategori.kategoriNamn FROM kategori
+INNER JOIN film
+    ON film.kategoriId = kategori.kategoriId;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
