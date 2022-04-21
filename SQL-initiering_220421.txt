@@ -1,5 +1,4 @@
 
-
 SENAST UPPDATERAD 15:22 den 21 april 2022
 -- Lade till en select fr mer än två tabeller nederst
 -- Ändrade namn på kolumner i 'film' efter möte med JJ och DC
@@ -41,14 +40,23 @@ Land
 
 
 
+-- #################################################################################################
 
+    S Q L
+
+-- #################################################################################################
+
+
+-- #################################################################################################
 -- SKAPA DATABAS - om det behövs
---
+-- #################################################################################################
+
 create DATABASE projekt_filmdatabas2;
 
+-- #################################################################################################
 -- SKAPA TABELLER
 -- 'film' kommer sist eftersom den kräver de andra
---
+-- #################################################################################################
 
 CREATE TABLE land(
 landId INT NOT NULL AUTO_INCREMENT,
@@ -88,14 +96,15 @@ filmLandId INT,
 filmHuvudrollsinnehavareId INT,
 filmRegissoerId INT,
 PRIMARY KEY (filmId),
-FOREIGN KEY (filmKategoriId) REFERENCES kategori(kategoriId),
-FOREIGN KEY (filmLandId) REFERENCES land(landId),
-FOREIGN KEY (filmHuvudrollsinnehavareId) REFERENCES huvudrollsinnehavare(huvudrollId),
-FOREIGN KEY (filmRegissoerId) REFERENCES regissoer(regissoerId));
+FOREIGN KEY (filmKategoriId)              REFERENCES kategori(kategoriId),
+FOREIGN KEY (filmLandId)                  REFERENCES land(landId),
+FOREIGN KEY (filmHuvudrollsinnehavareId)  REFERENCES huvudrollsinnehavare(huvudrollId),
+FOREIGN KEY (filmRegissoerId)             REFERENCES regissoer(regissoerId));
 
--- ----------------------------------------------------
+
+-- #################################################################################################
 -- Lite grundläggande insert-satser för att fylla upp bakgrundstabellerna (ej 'film')
--- ----------------------------------------------------
+-- #################################################################################################
 
 INSERT INTO kategori(kategoriNamn) VALUES('Drama'), ('Thriller'), ('Komedi'), ('Dokumentär'), ('Action'), ('Science fiction'), ('Skräck');
 SELECT * FROM kategori;
@@ -106,36 +115,37 @@ SELECT * FROM huvudrollsinnehavare;
 INSERT INTO regissoer(regissoerNamn) VALUES('David Lynch'), ('Stanley Kubrick'), ('Alfred Hitchcock'), ('Martin Scorsese'), ('Francis Ford Coppola'), ('Sergio Leone'), ('Ingmar Bergman'), ('Akira Kurosawa'), ('Tim Burton'), ('Quentin Tarantino');
 SELECT * FROM regissoer;
 
--- Rättade till nedanstående
 INSERT INTO land(landNamn) VALUES('USA'), ('Sverige'), ('Storbritannien'), ('Frankrike'), ('Kanada');
 SELECT DISTINCT  landNamn FROM land;
 
 
--- INSERT INTO film ()
+-- #################################################################################################
+--  Lägg till film i databasen
+-- #################################################################################################
 
--- innerjoin behöver skrivas
+-- Fejkdata här
 
-
--- Stämmer inte på riktigt förstås... Kate Winslet var inte med i Hajen... :-)
-INSERT INTO film (filmId, titel, kategoriId, huvudrollsinnehavareId,landId)
-VALUES (1, 'Hajen', 7, 1, 1);
-
-
--- SELECT-satser med innerjoin (hämta film plus ngn annan info från ngn annan tabell)
-
-SELECT film.titel, kategori.kategoriNamn FROM kategori
-INNER JOIN film
-    ON film.kategoriId = kategori.kategoriId;
-
---  SELECT-satser 
-  INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId)
+INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId)
 VALUES ('Hajen', 7, 1, 1, 2);
 
 INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId)
 VALUES ('Fisken', 6, 2, 2, 3);
 
 
--- SELECT från mer än en tabell
+
+-- #################################################################################################
+-- SELECT-satser med innerjoin (hämta film plus ngn annan info från ngn annan tabell)
+-- #################################################################################################
+
+SELECT film.titel, kategori.kategoriNamn FROM kategori
+INNER JOIN film
+    ON film.kategoriId = kategori.kategoriId;
+
+
+
+-- #################################################################################################
+-- SELECT som hämtar data från mer än en tabell
+-- #################################################################################################
 
 SELECT film.titel, kategori.kategoriNamn, huvudrollsinnehavare.huvudrollNamn,
        regissoer.regissoerNamn, land.landNamn FROM kategori
