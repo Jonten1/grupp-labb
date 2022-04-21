@@ -1,7 +1,14 @@
 
-SENAST UPPDATERAD 15:22 den 21 april 2022
+UPPDATERINGAR
+15:22 den 21 april 2022
 -- Lade till en select fr mer än två tabeller nederst
 -- Ändrade namn på kolumner i 'film' efter möte med JJ och DC
+--------------------------------------
+15:47 den 21 april 2022
+-- Justeringar
+
+
+
 
 1 Översikt 21 april:
 --------------------------------------
@@ -55,6 +62,7 @@ create DATABASE projekt_filmdatabas2;
 
 -- #################################################################################################
 -- SKAPA TABELLER
+-- 
 -- 'film' kommer sist eftersom den kräver de andra
 -- #################################################################################################
 
@@ -116,7 +124,7 @@ INSERT INTO regissoer(regissoerNamn) VALUES('David Lynch'), ('Stanley Kubrick'),
 SELECT * FROM regissoer;
 
 INSERT INTO land(landNamn) VALUES('USA'), ('Sverige'), ('Storbritannien'), ('Frankrike'), ('Kanada');
-SELECT DISTINCT  landNamn FROM land;
+SELECT DISTINCT landNamn FROM land;
 
 
 -- #################################################################################################
@@ -154,12 +162,6 @@ INNER JOIN land ON film.filmLandId = land.landId
 INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId
 INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId;
 )
-
-
-
-
-
-
 
 
 
