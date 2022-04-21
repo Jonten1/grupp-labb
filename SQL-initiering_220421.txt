@@ -1,8 +1,8 @@
 
 
-SENAST UPPDATERAD 14:44 den 21 april 2022
-
-
+SENAST UPPDATERAD 15:22 den 21 april 2022
+-- Lade till en select fr mer än två tabeller nederst
+-- Ändrade namn på kolumner i 'film' efter möte med JJ och DC
 
 1 Översikt 21 april:
 --------------------------------------
@@ -53,15 +53,12 @@ create DATABASE projekt_filmdatabas2;
 CREATE TABLE land(
 landId INT NOT NULL AUTO_INCREMENT,
 landNamn VARCHAR(50),
-
 PRIMARY KEY (landID)
-
 );
 
 DROP TABLE huvudrollsinnehavare;
 
 CREATE TABLE huvudrollsinnehavare(
-
 huvudrollId INT NOT NULL AUTO_INCREMENT,
 huvudrollNamn VARCHAR(50),
 PRIMARY KEY (huvudrollId)
@@ -69,41 +66,32 @@ PRIMARY KEY (huvudrollId)
 
 
 CREATE TABLE regissoer(
-
 regissoerId INT NOT NULL AUTO_INCREMENT,
 regissoerNamn VARCHAR(50),
 PRIMARY KEY (regissoerId)
-
 );
 
 
 CREATE TABLE kategori(
-
 kategoriId INT NOT NULL AUTO_INCREMENT,
 kategoriNamn VARCHAR(50),
-
 PRIMARY KEY (kategoriId)
 );
 
 DROP TABLE film;
+
 CREATE TABLE film(
-  filmId INT NOT NULL AUTO_INCREMENT,
-  titel VARCHAR(50),
-
-  kategoriId INT,
-  landId INT,
-  huvudrollsinnehavareId INT,
-  regissoerId INT,
-
-  PRIMARY KEY (filmId),
-
-  FOREIGN KEY (kategoriId)              REFERENCES  kategori(kategoriId),
-  FOREIGN KEY (landId)                  REFERENCES  land(landId),
-  FOREIGN KEY (huvudrollsinnehavareId)  REFERENCES  huvudrollsinnehavare(huvudrollId),
-  FOREIGN KEY (regissoerId)             REFERENCES  regissoer(regissoerId)
-
-);
-
+filmId INT NOT NULL AUTO_INCREMENT,
+titel VARCHAR(50),
+filmKategoriId INT,
+filmLandId INT,
+filmHuvudrollsinnehavareId INT,
+filmRegissoerId INT,
+PRIMARY KEY (filmId),
+FOREIGN KEY (filmKategoriId) REFERENCES kategori(kategoriId),
+FOREIGN KEY (filmLandId) REFERENCES land(landId),
+FOREIGN KEY (filmHuvudrollsinnehavareId) REFERENCES huvudrollsinnehavare(huvudrollId),
+FOREIGN KEY (filmRegissoerId) REFERENCES regissoer(regissoerId));
 
 -- ----------------------------------------------------
 -- Lite grundläggande insert-satser för att fylla upp bakgrundstabellerna (ej 'film')
@@ -139,7 +127,23 @@ SELECT film.titel, kategori.kategoriNamn FROM kategori
 INNER JOIN film
     ON film.kategoriId = kategori.kategoriId;
 
+--  SELECT-satser 
+  INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId)
+VALUES ('Hajen', 7, 1, 1, 2);
 
+INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId)
+VALUES ('Fisken', 6, 2, 2, 3);
+
+
+-- SELECT från mer än en tabell
+
+SELECT film.titel, kategori.kategoriNamn, huvudrollsinnehavare.huvudrollNamn,
+       regissoer.regissoerNamn, land.landNamn FROM kategori
+INNER JOIN film ON kategori.kategoriId = film.filmKategoriId
+INNER JOIN land ON film.filmLandId = land.landId
+INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId
+INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId;
+)
 
 
 
