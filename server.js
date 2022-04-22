@@ -33,3 +33,21 @@ app.use(express.static('public'))
 const port = 3000
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+app.put('/api/movies', (req, res) => {
+	// Samma "problem" som i post, just nu måste man välja mellan det som finns
+	let sql =
+		'UPDATE bok SET titel = ?, filmKategoriId = ?, filmHuvudrollsinnehavareId = ?,filmLandId = ?, filmRegissoerId = ? WHERE filmId = ?'
+	let params = [
+		req.body.titel,
+		req.body.filmKategoriId,
+		req.body.filmHuvudrollsinnehavareId,
+		req.body.filmLandId,
+		req.body.filmRegissoerId,
+		req.body.filmId
+	]
+	connection.query(sql, params, function (error, results, fields) {
+		if (error) throw error
+		res.json(results)
+	})
+})
