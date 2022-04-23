@@ -13,6 +13,7 @@ UPPDATERINGAR
 
 TODO:
 Vi borde nog uppdatera ER-diagrammet i Figma med aktuella namn här
+Vi borde möjligen ha bild-URL för varje film, men hur blir det om vi lägger till nya filmer?
 
 
 
@@ -25,7 +26,7 @@ Fem tabeller:
 		Kategori
 		Land
 --------------------------------------
-KOLUMNNAMNEN NEDAN HAR ÄNDRATS
+KOLUMNNAMNEN NEDAN HAR ÄNDRATS - dessa stämmer inte riktigt
 
 Film
 	FilmId
@@ -54,28 +55,28 @@ Land
 
 
 
--- #################################################################################################
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------
 
     S Q L   B Ö R J A R
 
--- #################################################################################################
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------
 
 
 
 
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 -- SKAPA DATABAS - om det behövs
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 
 create DATABASE projekt_filmdatabas2;
 
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 -- SKAPA TABELLER
 -- 
 -- 'film' kommer sist eftersom den kräver de andra
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 
 CREATE TABLE land(
 landId INT NOT NULL AUTO_INCREMENT,
@@ -121,14 +122,14 @@ FOREIGN KEY (filmHuvudrollsinnehavareId)  REFERENCES huvudrollsinnehavare(huvudr
 FOREIGN KEY (filmRegissoerId)             REFERENCES regissoer(regissoerId));
 
 
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 -- Lite grundläggande insert-satser för att fylla upp bakgrundstabellerna (ej 'film')
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 
 INSERT INTO kategori(kategoriNamn) VALUES('Drama'), ('Thriller'), ('Komedi'), ('Dokumentär'), ('Action'), ('Science fiction'), ('Skräck');
 SELECT * FROM kategori;
 
-INSERT INTO huvudrollsinnehavare(huvudrollNamn) VALUES('Kate Winslet'),('Charlize Theron'),('Bruce Willis'), ('Sigourney Weaver'),('Catherine Zeta-Jones'), ('Will Smith'), ('Keira Knightley'),('Al Pacino'),('Scarlett Johansson'), ('Sandra Bullock'),('Angelina Jolie'), ('Cameron Diaz'), ('Sandra Bullock');
+INSERT INTO huvudrollsinnehavare(huvudrollNamn) VALUES('Kate Winslet'),('Charlize Theron'),('Bruce Willis'), ('Sigourney Weaver'),('Catherine Zeta-Jones'), ('Will Smith'), ('Keira Knightley'),('Al Pacino'),('Scarlett Johansson'), ('Sandra Bullock'),('Angelina Jolie'), ('Cameron Diaz');
 SELECT * FROM huvudrollsinnehavare;
 
 INSERT INTO regissoer(regissoerNamn) VALUES('David Lynch'), ('Stanley Kubrick'), ('Alfred Hitchcock'), ('Martin Scorsese'), ('Francis Ford Coppola'), ('Sergio Leone'), ('Ingmar Bergman'), ('Akira Kurosawa'), ('Tim Burton'), ('Quentin Tarantino');
@@ -138,9 +139,9 @@ INSERT INTO land(landNamn) VALUES('USA'), ('Sverige'), ('Storbritannien'), ('Fra
 SELECT DISTINCT landNamn FROM land;
 
 
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 --  Lägg till film i databasen
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 
 -- Fejkdata här
 
@@ -152,9 +153,9 @@ VALUES ('Fisken', 6, 2, 2, 3);
 
 
 
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 -- SELECT-satser med innerjoin (hämta film plus ngn annan info från ngn annan tabell)
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 
 SELECT film.titel, kategori.kategoriNamn FROM kategori
 INNER JOIN film
@@ -162,9 +163,9 @@ INNER JOIN film
 
 
 
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 -- SELECT som hämtar data från mer än en tabell
--- #################################################################################################
+-- -------------------------------------------------------------------------------------------------
 
 SELECT film.titel, kategori.kategoriNamn, huvudrollsinnehavare.huvudrollNamn,
        regissoer.regissoerNamn, land.landNamn FROM kategori
