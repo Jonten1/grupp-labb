@@ -67,15 +67,102 @@ app.post("/api/nyfilm", (req, res) => {
   VALUES ('Hajen', 7, 1, 1, 2);
   */
 
-  let sql =
-    "INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId) VALUES(?,?,?,?,?)";
+  console.table(req.body.sidotabeller_som_aendras);
 
-  let params = ["Min nya film", 5, 3, 2, 2];
-  connection.query(sql, params, function (error, results, fields) {
-    if (error) throw error;
-    //res.json(results)
-    res.send("FILM TILLAGD");
-  });
+  //##############################################
+  // Antingen är det bara filmen som är ny, eller så läggs helt nya värden till i andra tabeller samtidigt
+  //##############################################
+  if (req.body.sidotabeller_som_aendras == {}) {
+    let sql =
+      "INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId) VALUES(?,?,?,?,?)";
+    let params = [
+      req.body.film,
+      req.body.kategori,
+      req.body.huvudroll,
+      req.body.land,
+      req.body.regissoer,
+    ];
+
+    connection.query(sql, params, function (error, results, fields) {
+      if (error) throw error;
+    });
+  } // ##################################
+  // HÄR: OM ÄVEN helt nya värden läggs till i andra tabeller samtidigt:
+  //
+  // dvs ngt av land kat huvudroll regissör
+  // ##################################
+  else {
+    let k;
+    let r;
+    let h;
+    let l;
+    if (req.body.kategori == undefined) {
+      k = req.body.sidotabeller_som_aendras["k"];
+
+      let sql = "INSERT INTO kategori(kategoriNamn) VALUES(?)";
+      let params = k[1];
+
+      connection.query(sql, params, function (error, results, fields) {
+        if (error) throw error;
+      });
+    } else {
+      k = [req.body.kategori];
+    }
+    if (req.body.huvudroll == undefined) {
+      h = req.body.sidotabeller_som_aendras["h"];
+
+      let sql = "INSERT INTO huvudrollsinnehavare(huvudrollNamn) VALUES(?)";
+      let params = h[1];
+
+      connection.query(sql, params, function (error, results, fields) {
+        if (error) throw error;
+      });
+    } else {
+      h = [req.body.huvudroll];
+      console.log("NORMAL: " + h);
+    }
+    if (req.body.land == undefined) {
+      l = req.body.sidotabeller_som_aendras["l"];
+
+      let sql = "INSERT INTO land(landNamn) VALUES(?)";
+      let params = l[1];
+
+      connection.query(sql, params, function (error, results, fields) {
+        if (error) throw error;
+      });
+    } else {
+      l = [req.body.land];
+    }
+    if (req.body.regissoer == undefined) {
+      r = req.body.sidotabeller_som_aendras["r"];
+
+      console.log(r);
+      console.log(r[0]);
+      console.log(r[1]);
+
+      let sql = "INSERT INTO regissoer(regissoerNamn) VALUES(?)";
+      let params = r[1];
+
+      connection.query(sql, params, function (error, results, fields) {
+        if (error) throw error;
+      });
+    } else {
+      r = [req.body.regissoer];
+      console.log("NORMAL r: " + r);
+    }
+
+    // ###############
+    // I filmtabellen ska INSERT då köras till slut --- med koppling till nytt/nya index
+    // ###############
+
+    let sql =
+      "INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId) VALUES(?,?,?,?,?)";
+    let params = [req.body.film, k[0], h[0], l[0], r[0]];
+
+    connection.query(sql, params, function (error, results, fields) {
+      if (error) throw error;
+    });
+  }
 });
 
 // filmId INT NOT NULL AUTO_INCREMENT,
@@ -90,7 +177,7 @@ GET för ALLA filmer (utan JOIN), dvs visar bara index för värdena i andra tab
 **********************/
 
 app.get("/api/filmer", (req, res) => {
-  //res.send('Här ska vi visa våra skivor')
+  //
   let sql = "SELECT * FROM film";
   connection.query(sql, function (err, results, fields) {
     if (err) throw err;
