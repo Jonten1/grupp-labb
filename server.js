@@ -34,6 +34,9 @@ const port = 3000;
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
+/***********************
+PUT
+**********************/
 app.put("/api/movies", (req, res) => {
   // Samma "problem" som i post, just nu måste man välja mellan det som finns
   let sql =
@@ -52,10 +55,9 @@ app.put("/api/movies", (req, res) => {
   });
 });
 
-// ###########################################
-// POST för ny film
-//
-// ###########################################
+/***********************
+POST
+**********************/
 
 app.post("/api/nyfilm", (req, res) => {
   //res.send('Här ska det komma in data om en ny film som lagts till')
@@ -83,15 +85,55 @@ app.post("/api/nyfilm", (req, res) => {
 // filmHuvudrollsinnehavareId INT NOT NULL,
 // filmRegissoerId INT, NOT NULL,
 
-// ###########################################
-// GET för alla filmer
-//
-// ###########################################
+/***********************
+GET för ALLA filmer (utan JOIN), dvs visar bara index för värdena i andra tabeller
+**********************/
 
-// GET för filmer
 app.get("/api/filmer", (req, res) => {
   //res.send('Här ska vi visa våra skivor')
   let sql = "SELECT * FROM film";
+  connection.query(sql, function (err, results, fields) {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/*
+/api/get_laender
+/api/get_regissoerer
+/api/get_huvudrollsinnehavare
+/api/get_kategorier
+*/
+/***********************
+GET för de andra tabellerna
+**********************/
+// ## LÄNDER
+app.get("/api/get_laender", (req, res) => {
+  let sql = "SELECT * FROM land";
+  connection.query(sql, function (err, results, fields) {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+// ## REGISSÖRER
+app.get("/api/get_regissoerer", (req, res) => {
+  let sql = "SELECT * FROM regissoer";
+  connection.query(sql, function (err, results, fields) {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+// ## HUVUDROLLSINNEHAVARE
+app.get("/api/get_huvudrollsinnehavare", (req, res) => {
+  let sql = "SELECT * FROM huvudrollsinnehavare";
+  connection.query(sql, function (err, results, fields) {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+// ## KATEGORIER
+app.get("/api/get_kategorier", (req, res) => {
+  let sql = "SELECT * FROM kategori";
   connection.query(sql, function (err, results, fields) {
     if (err) throw err;
     res.json(results);

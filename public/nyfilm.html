@@ -5,6 +5,92 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ny film</title>
+
+    <script>
+      /**************************
+        LAND
+      **************************/
+      fetch("http://localhost:3000/api/get_laender")
+        .then((resp) => resp.json())
+        .then(function (data) {
+          console.log(data);
+          console.log("Visa första i json-objektet: " + data[0].bokTitel);
+          let bok = data;
+          return bok.map(function (data) {
+            /*  
+          let li = createNode('li');
+            li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
+            append(ul, li);
+            */
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      /**************************
+        REGISSÖRER
+      **************************/
+      fetch("http://localhost:3000/api/get_regissoerer")
+        .then((resp) => resp.json())
+        .then(function (data) {
+          console.log(data);
+          console.log("Visa första i json-objektet: " + data[0].bokTitel);
+          let bok = data;
+          return bok.map(function (data) {
+            /*  
+          let li = createNode('li');
+            li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
+            append(ul, li);
+            */
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      /**************************
+        HUVUDROLLSINNEHAVARE
+      **************************/
+      fetch("http://localhost:3000/api/get_huvudrollsinnehavare")
+        .then((resp) => resp.json())
+        .then(function (data) {
+          console.log(data);
+          console.log("Visa första i json-objektet: " + data[0].bokTitel);
+          let bok = data;
+          return bok.map(function (data) {
+            /*  
+          let li = createNode('li');
+            li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
+            append(ul, li);
+            */
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      /**************************
+        KATEGORIER
+      **************************/
+      fetch("http://localhost:3000/api/get_kategorier")
+        .then((resp) => resp.json())
+        .then(function (data) {
+          console.log(data);
+          console.log("Visa första i json-objektet: " + data[0].bokTitel);
+          let bok = data;
+          return bok.map(function (data) {
+            /*  
+          let li = createNode('li');
+            li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
+            append(ul, li);
+            */
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    </script>
   </head>
   <body>
     <h1>Ny film</h1>
@@ -18,6 +104,28 @@
         <li>Land</li>
         <li>Regissör</li>
       </ul>
+
+      <b>STEG</b>
+      <ol>
+        <li>
+          Hämta befintliga: regissörer, huvudroll, land, kategorier (dvs kanske
+          fyra GET-anrop)
+        </li>
+        <li>
+          För varje värde - ha även dess id - det är det som ska användas vid en
+          POST
+        </li>
+        <li>Populera dropdown (använd t ex "select2")</li>
+        <li>Vid införande:</li>
+        <li>Kolla om värden är OK</li>
+        <li>
+          Om det är några nya värden (användaren skriver alltså ngt som ej redan
+          finns i db): Kör POST för att först lägga till nytt (t ex nytt land)
+          och hämta dessa värdens id:n
+        </li>
+
+        <li>Till slut - kör POST-anrop med ID:n för</li>
+      </ol>
     </section>
   </body>
 </html>
