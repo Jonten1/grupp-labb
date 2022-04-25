@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const connection = require("gitignorefolder/connection");
+const connection = require("./gitignorefolder/connection");
 
 const mongo = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017";
@@ -33,3 +33,67 @@ app.use(express.static("public"));
 const port = 3000;
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+app.put("/api/movies", (req, res) => {
+  // Samma "problem" som i post, just nu måste man välja mellan det som finns
+  let sql =
+    "UPDATE bok SET titel = ?, filmKategoriId = ?, filmHuvudrollsinnehavareId = ?,filmLandId = ?, filmRegissoerId = ? WHERE filmId = ?";
+  let params = [
+    req.body.titel,
+    req.body.filmKategoriId,
+    req.body.filmHuvudrollsinnehavareId,
+    req.body.filmLandId,
+    req.body.filmRegissoerId,
+    req.body.filmId,
+  ];
+  connection.query(sql, params, function (error, results, fields) {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+// ###########################################
+// POST för ny film
+//
+// ###########################################
+
+app.post("/api/nyfilm", (req, res) => {
+  //res.send('Här ska det komma in data om en ny film som lagts till')
+
+  /*
+  INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId)
+  VALUES ('Hajen', 7, 1, 1, 2);
+  */
+
+  let sql =
+    "INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId) VALUES(?,?,?,?,?)";
+
+  let params = ["Min nya film", 5, 3, 2, 2];
+  connection.query(sql, params, function (error, results, fields) {
+    if (error) throw error;
+    //res.json(results)
+    res.send("FILM TILLAGD");
+  });
+});
+
+// filmId INT NOT NULL AUTO_INCREMENT,
+// titel VARCHAR(50) NOT NULL ,
+// filmKategoriId INT NOT NULL ,
+// filmLandId INT NOT NULL,
+// filmHuvudrollsinnehavareId INT NOT NULL,
+// filmRegissoerId INT, NOT NULL,
+
+// ###########################################
+// GET för alla filmer
+//
+// ###########################################
+
+// GET för filmer
+app.get("/api/filmer", (req, res) => {
+  //res.send('Här ska vi visa våra skivor')
+  let sql = "SELECT * FROM film";
+  connection.query(sql, function (err, results, fields) {
+    if (err) throw err;
+    res.json(results);
+  });
+});

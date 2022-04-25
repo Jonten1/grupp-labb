@@ -74,7 +74,7 @@ create DATABASE projekt_filmdatabas2;
 
 -- -------------------------------------------------------------------------------------------------
 -- SKAPA TABELLER
--- 
+--
 -- 'film' kommer sist eftersom den kräver de andra
 -- -------------------------------------------------------------------------------------------------
 
@@ -173,13 +173,3 @@ INNER JOIN film ON kategori.kategoriId = film.filmKategoriId
 INNER JOIN land ON film.filmLandId = land.landId
 INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId
 INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId;
-)
-
-
-
-
-
-
-
-
-
