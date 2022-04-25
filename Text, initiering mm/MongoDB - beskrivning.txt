@@ -1,0 +1,29 @@
+
+--------------------------------------------
+Information i MongoDB
+--------------------------------------------
+Två strukturvarianter
+
+I båda fall är film (-titel) troligen nyckel
+
+--------------------------------------------
+Variant A:
+
+FILM
+	- FILMTITEL
+	- RECENSION 					Flera per film
+			- FOERFATTARE
+			- DATUM
+			- RUBRIK
+			- RECENSIONSTEXT
+			- BETYG
+--------------------------------------------
+Variant B:
+
+- RECENSION 					Flera per film
+			- FILM(-TITEL)
+			- FOERFATTARE
+			- DATUM
+			- RUBRIK
+			- RECENSIONSTEXT
+			- BETYG
