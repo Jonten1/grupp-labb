@@ -54,11 +54,10 @@ Land
 	LandId
 
 
-
 -- -------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------
 
-    S Q L   B Ö R J A R
+--    S Q L   B Ö R J A R
 
 -- -------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------
@@ -114,12 +113,12 @@ titel VARCHAR(50) NOT NULL ,
 filmKategoriId INT NOT NULL ,
 filmLandId INT NOT NULL,
 filmHuvudrollsinnehavareId INT NOT NULL,
-filmRegissoerId INT, NOT NULL,
+filmRegissoerId INT NOT NULL,
 PRIMARY KEY (filmId),
-FOREIGN KEY (filmKategoriId)              REFERENCES kategori(kategoriId),
-FOREIGN KEY (filmLandId)                  REFERENCES land(landId),
-FOREIGN KEY (filmHuvudrollsinnehavareId)  REFERENCES huvudrollsinnehavare(huvudrollId),
-FOREIGN KEY (filmRegissoerId)             REFERENCES regissoer(regissoerId));
+FOREIGN KEY (filmKategoriId) REFERENCES kategori(kategoriId),
+FOREIGN KEY (filmLandId) REFERENCES land(landId),
+FOREIGN KEY (filmHuvudrollsinnehavareId) REFERENCES huvudrollsinnehavare(huvudrollId),
+FOREIGN KEY (filmRegissoerId) REFERENCES regissoer(regissoerId));
 
 
 -- -------------------------------------------------------------------------------------------------
@@ -159,9 +158,7 @@ VALUES ('Fisken', 6, 2, 2, 3);
 
 SELECT film.titel, kategori.kategoriNamn FROM kategori
 INNER JOIN film
-    ON film.kategoriId = kategori.kategoriId;
-
-
+    ON film.filmKategoriId = kategori.kategoriId;
 
 -- -------------------------------------------------------------------------------------------------
 -- SELECT som hämtar data från mer än en tabell
@@ -173,3 +170,11 @@ INNER JOIN film ON kategori.kategoriId = film.filmKategoriId
 INNER JOIN land ON film.filmLandId = land.landId
 INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId
 INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId;
+
+
+-- FÖR ATT ANVÄNDA LÖSENORD OSV
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456789';
+
+
+

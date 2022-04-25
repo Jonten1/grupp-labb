@@ -1,7 +1,10 @@
 
-
+// DENNA FIL MED SQL kan ersätta insomnia/postman
+// om man installerar detta tillägg:
+// https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 GET http://localhost:3000/api/filmer
 
 
+//POST http://localhost:3000/api/nyfilm
 
