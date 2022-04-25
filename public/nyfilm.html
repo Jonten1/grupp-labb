@@ -4,7 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ny film</title>
+    <title>Lägg till en ny film i databasen</title>
+
+    <!-
+select2 är ett bibliotek som bl.a. innehåller avancerade
+dropdown-menyer som även har inskrivning av nya värden
+<link
+href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+rel="stylesheet"
+/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    --> // ANVÄNDER DENNA IST F SELECT2:
+    //https://stackoverflow.com/questions/5650457/html-select-form-with-option-to-enter-custom-value
+
+    <!--
+      SKA SE UT PÅ DETTA VIS  
+    <input type="text" list="cars" />
+    <datalist id="cars">
+      <option>Volvo</option>
+      <option>Saab</option>
+      <option>Mercedes</option>
+      <option>Audi</option>
+    </datalist>
+    -->
 
     <script>
       /**************************
@@ -13,11 +36,18 @@
       fetch("http://localhost:3000/api/get_laender")
         .then((resp) => resp.json())
         .then(function (data) {
+          console.log("#data#" + data);
+
           console.log(data);
-          console.log("Visa första i json-objektet: " + data[0].bokTitel);
+          console.log(data[0]);
+
+          console.log(
+            "¤¤¤¤Visa första i json-objektet för LAND: " + data[0].landId
+          );
+
           let bok = data;
           return bok.map(function (data) {
-            /*  
+            /*
           let li = createNode('li');
             li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
             append(ul, li);
@@ -38,7 +68,7 @@
           console.log("Visa första i json-objektet: " + data[0].bokTitel);
           let bok = data;
           return bok.map(function (data) {
-            /*  
+            /*
           let li = createNode('li');
             li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
             append(ul, li);
@@ -59,7 +89,7 @@
           console.log("Visa första i json-objektet: " + data[0].bokTitel);
           let bok = data;
           return bok.map(function (data) {
-            /*  
+            /*
           let li = createNode('li');
             li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
             append(ul, li);
@@ -80,7 +110,7 @@
           console.log("Visa första i json-objektet: " + data[0].bokTitel);
           let bok = data;
           return bok.map(function (data) {
-            /*  
+            /*
           let li = createNode('li');
             li.innerHTML = data.bokTitel + ' ' + data.bokForfattare + ' ' + data.kategoriNamn;
             append(ul, li);
@@ -127,5 +157,15 @@
         <li>Till slut - kör POST-anrop med ID:n för</li>
       </ol>
     </section>
+
+    <input type="text" list="cars" id="abc" />
+    <datalist id="cars">
+      <option>Volvo</option>
+      <option>Saab</option>
+      <option>Mercedes</option>
+      <option>Audi</option>
+    </datalist>
+
+    TA VÄRDET MED document.getElementById("abc").value
   </body>
 </html>
