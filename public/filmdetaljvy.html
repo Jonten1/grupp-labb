@@ -10,9 +10,10 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="js/fetch-recension-post.js"></script>
-
     <script>
+      // Globalt: filmtitel
+      var g_filmtitel = "";
+
       // parsa url
 
       const params = new URLSearchParams(window.location.search);
@@ -33,6 +34,10 @@
             // Visa data på sidan
             document.querySelector("#ftitel").innerHTML =
               data.titel + " (" + data.kategoriNamn + ") ";
+
+            // Spara titeln globalt, bra för recensioner
+            g_filmtitel = data.titel;
+
             //document.querySelector("#fk").innerHTML = data.kategoriNamn;
             document.querySelector("#fr").innerHTML = data.regissoerNamn;
             document.querySelector("#fh").innerHTML = data.huvudrollNamn;
@@ -59,20 +64,20 @@
             let rs = data.recensioner;
 
             /*
-        id: "35692",
-        filmtitel: "Hajen",
-        foerfattare: "Kalle",
-        datum: 220425,
-        rubrik: "Spännande och lång gammal film",
-        recensionstext: "Rätt spännande ändå.",
-        betyg: 10
-*/
+              id: "35692",
+              filmtitel: "Hajen",
+              foerfattare: "Kalle",
+              datum: 220425,
+              rubrik: "Spännande och lång gammal film",
+              recensionstext: "Rätt spännande ändå.",
+              betyg: 10
+      */
             let str = "";
             for (i in rs) {
               if (rs[i].recensionstext) {
                 console.table(rs[i]);
                 str +=
-                  "<div class='container p-5 my-5 bg-secondary text-white'><h3 class='h3'><b>";
+                  "<div class='container p-5 my-5 bg-secondary text-white rounded-3'><h3 class='h3'><b>";
                 str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>";
                 str +=
                   "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
@@ -114,35 +119,28 @@
       <h4 class="h4" id="fl"></h4>
       <hr / style="margin-bottom: 35px">
 
-      <section style="margin-top: 35px">
-        <h3 class="h3">Recensioner</h3>
-        <div id="recensionsplats"></div>
-        <input type="text" />
-        <input type="submit" value="lägg till recenssion" />
-      </section>
-
       <div class="container mt-3">
         <h2>Skriv en recension</h2>
         <p></p>
-        <form action="/action_page.php">
+        <form id="recensionsformulaeret">
           <div class="mb-3 mt-3">
-            <label for="namn">Namn</label>
+            <label for="rnamn">Namn</label>
             <input
-              id="namn"
+              id="rnamn"
               type="text"
               class="form-control form-control-lg"
               placeholder="Namn"
             />
-            <label for="rubrik">Rubrik</label>
+            <label for="rrubrik">Rubrik</label>
             <input
-              id="rubrik"
+              id="rrubrik"
               type="text"
               class="form-control form-control-lg"
               placeholder="Rubrik"
             />
-            <label for="betyg">Betyg (1-10)</label>
+            <label for="rbetyg">Betyg (1-10)</label>
             <input
-              id="betyg"
+              id="rbetyg"
               type="text"
               class="form-control form-control-lg"
               placeholder="Betyg"
@@ -162,6 +160,14 @@
           </button>
         </form>
       </div>
+
+      <section style="margin-top: 35px">
+        <h3 class="h3">Recensioner</h3>
+        <div id="recensionsplats"></div>
+        <input type="text" />
+        <input type="submit" value="lägg till recenssion" />
+      </section>
     </div>
+    <script src="js/fetch-recension-post.js"></script>
   </body>
 </html>
