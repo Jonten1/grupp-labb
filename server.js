@@ -19,9 +19,9 @@ mongo.connect(
       console.error(err);
       return;
     }
-    // Namnet på collection tror jag
-    db = client.db("?");
-    books = db.collection("?");
+
+    db = client.db("recensionsdb");
+    recensioner = db.collection("recensioner");
   }
 );
 
@@ -245,4 +245,68 @@ app.get("/api/film_info2/:id", (req, res) => {
     if (error) throw error;
     res.json(results);
   });
+});
+
+// #############################################
+// MONGODB
+//
+app.get("/api/alla_recensioner", (req, res) => {
+  recensioner.find().toArray((err, items) => {
+    if (err) throw err;
+    res.json({ recensioner: items });
+  });
+});
+
+// HÄMTA RECENSIONER FÖR VISS FILM
+app.get("/api/recension/:filmnamn", (req, res) => {
+  let filmtitel2 = req.params.filmnamn;
+
+  console.log(filmtitel2);
+  recensioner.find({ filmtitel: filmtitel2 }).toArray((err, items) => {
+    if (err) throw err;
+    res.json({ recensioner: items });
+
+    // for (let j in recensioner) {
+    //   console.log(j);
+    //   console.log(res[j]);
+    // }
+  });
+});
+
+// #############################################
+// MongDB POST, lägga till en ny recension
+
+// id: "35692",
+// filmtitel: "Hajen",
+// foerfattare: "Kalle",
+// datum: 220425,
+// rubrik: "Spännande och lång gammal film",
+// recensionstext: "Rätt spännande ändå.",
+// betyg: 10
+
+app.post("/api/laegg_till_recension", (req, res) => {
+  let i = req.body.id;
+  let ft = req.body.filmtitel;
+  let rr = req.body.recensionsrubrik;
+  let rf = req.body.recensionsfoerfattare;
+  let rd = req.body.recensionsdatum;
+  let rtxt = req.body.recensionstext;
+  let b = req.body.recensionsbetyg;
+
+  recensioner.insertOne(
+    {
+      id: i,
+      filmtitel: ft,
+      foerfattare: rf,
+      datum: rd,
+      rubrik: rr,
+      recensionstext: rtxt,
+      betyg: b,
+    },
+    (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.json({ ok: true });
+    }
+  );
 });

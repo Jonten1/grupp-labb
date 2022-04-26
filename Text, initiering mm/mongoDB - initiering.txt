@@ -1,7 +1,7 @@
 
 mongosh
 
-use node_recensionsdatabas
+use recensionsdb
 
 * Lägg till en film
 db.recensioner.insertMany(
