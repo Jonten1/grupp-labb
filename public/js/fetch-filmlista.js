@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function fetchData() {
 	fetch('http://localhost:3000/api/filmer')
 		.then((response) => {
@@ -12,7 +11,7 @@ function fetchData() {
 			const html = data
 				.map((filmer) => {
 					return `<div class="filmer">
-				<a href="http://localhost:3000/api/filmer/:${filmer.filmId}">${filmer.titel}</a>
+				<a href="filmdetaljvy.html">${filmer.titel}</a>
 				</div>
 				`
 				})
