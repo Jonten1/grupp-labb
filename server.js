@@ -229,10 +229,20 @@ app.get("/api/get_kategorier", (req, res) => {
 
 // Detaljvy
 
-app.get('/api/film/:id', (req, res) => {
-  let sql = "SELECT * FROM film WHERE filmId = ?"
+app.get("/api/film/:id", (req, res) => {
+  let sql = "SELECT * FROM film WHERE filmId = ?";
   connection.query(sql, [req.params.id], function (error, results, fields) {
-      if (error) throw error
-      res.json(results)
-  })
-})
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+// DETALJVY 2 - all info i text
+app.get("/api/film_info2/:id", (req, res) => {
+  let sql =
+    "SELECT film.titel, kategori.kategoriNamn, huvudrollsinnehavare.huvudrollNamn, regissoer.regissoerNamn, land.landNamn FROM kategori INNER JOIN film ON kategori.kategoriId = film.filmKategoriId INNER JOIN land ON film.filmLandId = land.landId INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId WHERE filmId = ?";
+  connection.query(sql, [req.params.id], function (error, results, fields) {
+    if (error) throw error;
+    res.json(results);
+  });
+});
