@@ -10,6 +10,8 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="js/fetch-recension-post.js"></script>
+
     <script>
       // parsa url
 
@@ -28,6 +30,7 @@
           return film.map(function (data) {
             console.table(data);
 
+            // Visa data på sidan
             document.querySelector("#ftitel").innerHTML =
               data.titel + " (" + data.kategoriNamn + ") ";
             //document.querySelector("#fk").innerHTML = data.kategoriNamn;
@@ -35,35 +38,130 @@
             document.querySelector("#fh").innerHTML = data.huvudrollNamn;
             document.querySelector("#fl").innerHTML = data.landNamn;
 
-            // Visa data på sidan
+            // ------------------------------------------------------------------------------------
+            // Visa sedan recensioner för filmen i fråga genom att fetcha
+            // från MongoDB med filmens titel.
+            //
+            //
+            //
+            visa_recensioner(data.titel);
           });
         });
 
-      // fetcha sedan rätt fr mongodb 		- visa
+      // Gör fetch mot MongoDB-endpointen
+      function visa_recensioner(filmnamn) {
+        const url = "http://localhost:3000/api/recension/" + filmnamn;
+
+        fetch(url)
+          .then((resp) => resp.json())
+          .then(function (data) {
+            console.table(data.recensioner);
+            let rs = data.recensioner;
+
+            /*
+        id: "35692",
+        filmtitel: "Hajen",
+        foerfattare: "Kalle",
+        datum: 220425,
+        rubrik: "Spännande och lång gammal film",
+        recensionstext: "Rätt spännande ändå.",
+        betyg: 10
+*/
+            let str = "";
+            for (i in rs) {
+              if (rs[i].recensionstext) {
+                console.table(rs[i]);
+                str +=
+                  "<div class='container p-5 my-5 bg-secondary text-white'><h3 class='h3'><b>";
+                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>";
+                str +=
+                  "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
+                str += rs[i].recensionstext;
+
+                str += "<hr><b class='fs-5'>Betyg: ";
+                str +=
+                  rs[i].betyg +
+                  "</b><hr><p class='fs-6'> (Datum: " +
+                  rs[i].datum +
+                  ")</p>";
+                str += "</p></div>";
+              }
+            }
+
+            document.querySelector("#recensionsplats").innerHTML = str;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     </script>
 
-    <title>Document</title>
+    <title>Film i databasen</title>
   </head>
   <body>
     <div class="container p-5 my-5 border">
-      <h1 id="titel"></h1>
+      <b
+        ><i><h1 id="ftitel"></h1></i
+      ></b>
       <hr />
-
       <h4 class="h4"><b>Regissör</b></h4>
       <h4 class="h4" id="fr"></h4>
       <hr />
       <h4 class="h4"><b>Huvudrollsinnehavare</b></h4>
       <h4 class="h4" id="fh"></h4>
       <hr />
-      <h4 class="h4"><b>land</b></h4>
+      <h4 class="h4"><b>Land</b></h4>
       <h4 class="h4" id="fl"></h4>
       <hr / style="margin-bottom: 35px">
 
       <section style="margin-top: 35px">
         <h3 class="h3">Recensioner</h3>
-				<input type="text">
-				<input type="submit" value="lägg till recenssion">
+        <div id="recensionsplats"></div>
+        <input type="text" />
+        <input type="submit" value="lägg till recenssion" />
       </section>
+
+      <div class="container mt-3">
+        <h2>Skriv en recension</h2>
+        <p></p>
+        <form action="/action_page.php">
+          <div class="mb-3 mt-3">
+            <label for="namn">Namn</label>
+            <input
+              id="namn"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Namn"
+            />
+            <label for="rubrik">Rubrik</label>
+            <input
+              id="rubrik"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Rubrik"
+            />
+            <label for="betyg">Betyg (1-10)</label>
+            <input
+              id="betyg"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Betyg"
+            />
+
+            <label for="rt">Min recension</label>
+            <textarea
+              class="form-control"
+              rows="5"
+              id="rt"
+              name="text"
+              placeholder="Recensionstext"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Lägg till recension
+          </button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
