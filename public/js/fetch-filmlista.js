@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function fetchData() {
 	fetch('http://localhost:3000/api/filmer')
 		.then((response) => {
