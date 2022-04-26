@@ -14,7 +14,6 @@ function fetchData() {
 				<a href="http://localhost:3000/filmdetaljvy.html?id=${filmer.filmId}">${filmer.titel}</a>
 				</div>
 				`
-
 					//http://localhost:3000/filmdetaljvy.html?id=1
 				})
 				.join('')
