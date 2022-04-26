@@ -226,3 +226,13 @@ app.get("/api/get_kategorier", (req, res) => {
     res.json(results);
   });
 });
+
+// Detaljvy
+
+app.get('/api/film/:id', (req, res) => {
+  let sql = "SELECT * FROM film WHERE filmId = ?"
+  connection.query(sql, [req.params.id], function (error, results, fields) {
+      if (error) throw error
+      res.json(results)
+  })
+})
