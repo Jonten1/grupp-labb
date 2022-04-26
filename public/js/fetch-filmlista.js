@@ -11,9 +11,11 @@ function fetchData() {
       const html = data
         .map((filmer) => {
           return `<div class="filmer">
-				<a href="http://localhost:3000/api/filmer/:${filmer.filmId}">${filmer.titel}</a>
+				<a href="http://localhost:3000/filmdetaljvy.html?id=${filmer.filmId}">${filmer.titel}</a>
 				</div>
 				`;
+
+          //http://localhost:3000/filmdetaljvy.html?id=1
         })
         .join("");
       console.log(html);
