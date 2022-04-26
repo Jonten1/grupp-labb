@@ -1,32 +1,31 @@
 function fetchData() {
-  fetch("http://localhost:3000/api/filmer")
-    .then((response) => {
-      if (!response.ok) {
-        throw Error("ERROR");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      const html = data
-        .map((filmer) => {
-          return `<div class="filmer">
+	fetch('http://localhost:3000/api/filmer')
+		.then((response) => {
+			if (!response.ok) {
+				throw Error('ERROR')
+			}
+			return response.json()
+		})
+		.then((data) => {
+			console.log(data)
+			const html = data
+				.map((filmer) => {
+					return `<div class="filmer">
 				<a href="http://localhost:3000/filmdetaljvy.html?id=${filmer.filmId}">${filmer.titel}</a>
 				</div>
-				`;
-
-          //http://localhost:3000/filmdetaljvy.html?id=1
-        })
-        .join("");
-      console.log(html);
-      document.querySelector("#app").insertAdjacentHTML("afterbegin", html);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+				`
+					//http://localhost:3000/filmdetaljvy.html?id=1
+				})
+				.join('')
+			console.log(html)
+			document.querySelector('#app').insertAdjacentHTML('afterbegin', html)
+		})
+		.catch((error) => {
+			console.log(error)
+		})
 }
 
-fetchData();
+fetchData()
 
 // function createNode(element) {
 // 	return document.createElement(element)
