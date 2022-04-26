@@ -6,7 +6,7 @@ function append(parent, el) {
 	return parent.appendChild(el)
 }
 
-const a = document.getElementById('film')
+const ul = document.getElementById('film')
 const url = 'http://localhost:3000/api/filmer'
 fetch(url)
 	.then((resp) => resp.json())
@@ -17,7 +17,7 @@ fetch(url)
 		return film.map(function (data) {
 			let li = createNode('li')
 			li.innerHTML = data.titel
-			append(a, li)
+			append(ul, li)
 		})
 	})
 	.catch(function (error) {
