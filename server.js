@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const connection = require("./connection");
+const connection = require("./gitignorefolder/connection");
 
 const mongo = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017";
@@ -19,9 +19,9 @@ mongo.connect(
       console.error(err);
       return;
     }
-    // Namnet på collection tror jag
-    db = client.db("?");
-    books = db.collection("?");
+
+    db = client.db("recensionsdb");
+    recensioner = db.collection("recensioner");
   }
 );
 
@@ -195,16 +195,6 @@ app.get("/api/filmer", (req, res) => {
 GET för de andra tabellerna
 **********************/
 // ## LÄNDER
-
-app.delete("/api/delete_filmer", (req, res) => {
-  console.log(req.body);
-  let sql = "DELETE FROM film WHERE titel = ?";
-  connection.query(sql, [req.body.titel], function (error, results, fields) {
-    if (error) throw error;
-    res.end("Filmen är nu raderad!");
-  });
-});
-
 app.get("/api/get_laender", (req, res) => {
   let sql = "SELECT * FROM land";
   connection.query(sql, function (err, results, fields) {
@@ -244,5 +234,88 @@ app.get("/api/film/:id", (req, res) => {
   connection.query(sql, [req.params.id], function (error, results, fields) {
     if (error) throw error;
     res.json(results);
+  });
+});
+
+// DETALJVY 2 - all info i text
+app.get("/api/film_info2/:id", (req, res) => {
+  let sql =
+    "SELECT film.titel, kategori.kategoriNamn, huvudrollsinnehavare.huvudrollNamn, regissoer.regissoerNamn, land.landNamn FROM kategori INNER JOIN film ON kategori.kategoriId = film.filmKategoriId INNER JOIN land ON film.filmLandId = land.landId INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId WHERE filmId = ?";
+  connection.query(sql, [req.params.id], function (error, results, fields) {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+// #############################################
+// MONGODB
+//
+app.get("/api/alla_recensioner", (req, res) => {
+  recensioner.find().toArray((err, items) => {
+    if (err) throw err;
+    res.json({ recensioner: items });
+  });
+});
+
+// HÄMTA RECENSIONER FÖR VISS FILM
+app.get("/api/recension/:filmnamn", (req, res) => {
+  let filmtitel2 = req.params.filmnamn;
+
+  console.log(filmtitel2);
+  recensioner.find({ filmtitel: filmtitel2 }).toArray((err, items) => {
+    if (err) throw err;
+    res.json({ recensioner: items });
+
+    // for (let j in recensioner) {
+    //   console.log(j);
+    //   console.log(res[j]);
+    // }
+  });
+});
+
+// #############################################
+// MongDB POST, lägga till en ny recension
+
+// id: "35692",
+// filmtitel: "Hajen",
+// foerfattare: "Kalle",
+// datum: 220425,
+// rubrik: "Spännande och lång gammal film",
+// recensionstext: "Rätt spännande ändå.",
+// betyg: 10
+
+app.post("/api/laegg_till_recension", (req, res) => {
+  let i = req.body.id;
+  let ft = req.body.filmtitel;
+  let rr = req.body.recensionsrubrik;
+  let rf = req.body.recensionsfoerfattare;
+  let rd = req.body.recensionsdatum;
+  let rtxt = req.body.recensionstext;
+  let b = req.body.recensionsbetyg;
+
+  recensioner.insertOne(
+    {
+      id: i,
+      filmtitel: ft,
+      foerfattare: rf,
+      datum: rd,
+      rubrik: rr,
+      recensionstext: rtxt,
+      betyg: b,
+    },
+    (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.json({ ok: true });
+    }
+  );
+});
+
+app.delete("/api/delete_filmer", (req, res) => {
+  console.log(req.body);
+  let sql = "DELETE FROM film WHERE titel = ?";
+  connection.query(sql, [req.body.titel], function (error, results, fields) {
+    if (error) throw error;
+    res.end("Filmen är nu raderad!");
   });
 });
