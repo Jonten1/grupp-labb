@@ -69,7 +69,7 @@ Land
 -- SKAPA DATABAS - om det behövs
 -- -------------------------------------------------------------------------------------------------
 
-create DATABASE projekt_filmdatabas2;
+CREATE DATABASE projekt_filmdatabas;
 
 -- -------------------------------------------------------------------------------------------------
 -- SKAPA TABELLER
