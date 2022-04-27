@@ -3,7 +3,6 @@ mongosh
 
 use recensionsdb
 
-* Lägg till en film
 db.recensioner.insertMany(
   [
     {

@@ -319,3 +319,36 @@ app.delete("/api/delete_filmer", (req, res) => {
     res.end("Filmen är nu raderad!");
   });
 });
+
+// #############################################
+// MongoDB UPDATE, ÄNDRA EN RECENSION
+//
+
+app.put("/api/uppdatera_recension", (req, res) => {
+  let i = req.body.id;
+  let ft = req.body.filmtitel;
+  let rr = req.body.recensionsrubrik;
+  let rf = req.body.recensionsfoerfattare;
+  let rd = req.body.recensionsdatum;
+  let rtxt = req.body.recensionstext;
+  let b = req.body.recensionsbetyg;
+
+  recensioner.updateOne(
+    { id: i },
+    {
+      $set: {
+        filmtitel: ft,
+        foerfattare: rf,
+        datum: rd,
+        rubrik: rr,
+        recensionstext: rtxt,
+        betyg: b,
+      },
+    },
+    (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.json({ ok: true });
+    }
+  );
+});
