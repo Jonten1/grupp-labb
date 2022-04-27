@@ -12,7 +12,7 @@
 
     <script>
       function ta_bort_film_och_rec() {
-        alert("Börjar med att ta bort fil fr mySQL: " + g_filmtitel);
+        console.log("Börjar med att ta bort fil fr mySQL: " + g_filmtitel);
 
         async function goer_delete_med_fetch(url = "", data = {}) {
           const response = await fetch(
@@ -40,6 +40,7 @@
         }
 
         goer_delete_med_fetch();
+        window.location.replace("http://localhost:3000/filmlista.html");
       }
 
       // 				app.delete("/api/delete_filmer", (req, res) => {
