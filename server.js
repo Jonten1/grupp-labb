@@ -369,6 +369,6 @@ app.put("/api/uppdatera_recension", (req, res) => {
 // #### måste först läsas in så att rätt data kommer in - annars blir det fel
 // --------------------------------------------------------------
 //
-//const fyll_paa_med_filmer = require("./fyll_paa_med_filmer");
-//fyll_paa_med_filmer();
+const fyll_paa_med_filmer = require("./fyll_paa_med_filmer");
+fyll_paa_med_filmer();
 //

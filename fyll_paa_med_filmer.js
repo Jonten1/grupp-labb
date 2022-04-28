@@ -55,6 +55,7 @@ const fyll_paa_med_filmer = () => {
       } else {
         // #### Om filmen ej finns med - lägg till
 
+        console.log(en_filmlista[i][0] + " fanns ej. Lägger till:");
         let params = [
           en_filmlista[i][0],
           en_filmlista[i][1],
@@ -62,6 +63,7 @@ const fyll_paa_med_filmer = () => {
           en_filmlista[i][3],
           en_filmlista[i][4],
         ];
+        console.log(en_filmlista[i]);
         let sql =
           "INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId) VALUES(?,?,?,?,?)";
 
@@ -91,10 +93,10 @@ const fyll_paa_med_filmer = () => {
 
 var en_filmlista = [
   ["Nyckeln till frihet", 1, 13, 1, 11],
-  ["Gudfadern", 1, 12, 1, 5],
-  ["The Dark Knight", 5, 13, 1, 12],
-  ["12 edsvurna män", 1, 14, 1, 13],
-  ["Schindler's list", 1, 15, 1, 14],
+  ["Gudfadern", 1, 14, 1, 5],
+  ["The Dark Knight", 5, 15, 1, 12],
+  ["12 edsvurna män", 1, 16, 1, 13],
+  ["Schindler's list", 1, 17, 1, 14],
 ];
 
 module.exports = fyll_paa_med_filmer;
