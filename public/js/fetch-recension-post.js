@@ -18,13 +18,13 @@ function nyrecension(event) {
   let recensionstext = document.querySelector("#rt").value;
   let recensionsbetyg = document.querySelector("#rbetyg").value;
 
-  cl(id);
-  cl(filmtitel);
-  cl(recensionsrubrik);
-  cl(recensionsfoerfattare);
-  cl(recensionsdatum);
-  cl(recensionstext);
-  cl(recensionsbetyg);
+  // cl(id);
+  // cl(filmtitel);
+  // cl(recensionsrubrik);
+  // cl(recensionsfoerfattare);
+  // cl(recensionsdatum);
+  // cl(recensionstext);
+  // cl(recensionsbetyg);
 
   // Example POST method implementation:
   async function postData(url = "", data = {}) {

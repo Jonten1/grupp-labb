@@ -3,7 +3,13 @@
 // om man installerar detta tillägg:
 // https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
+
+GET http://localhost:3000/api/alla_recensioner
+
 GET http://localhost:3000/api/filmer
+
+PUT http://localhost:3000/api/uppdatera_recension
+
 
 
 //POST http://localhost:3000/api/nyfilm
