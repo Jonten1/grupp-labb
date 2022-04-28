@@ -9,14 +9,14 @@ function fetchData() {
 		.then((data) => {
 			console.log(data)
 			const html = data
-				.map((filmer) => {
-					return `<div class="filmer">
-				<a href="http://localhost:3000/filmdetaljvy.html?id=${filmer.filmId}">${filmer.titel}</a>
-				</div>
-				`
-					//http://localhost:3000/filmdetaljvy.html?id=1
-				})
-				.join('')
+			.map((filmer) => {
+				return `<div class="filmer">
+			<a href="http://localhost:3000/filmdetaljvy.html?id=${filmer.filmId}">${filmer.titel}</a>
+			</div>
+			`
+				//http://localhost:3000/filmdetaljvy.html?id=1
+			})
+			.join('')
 			console.log(html)
 			document.querySelector('#app').insertAdjacentHTML('afterbegin', html)
 		})
@@ -26,6 +26,10 @@ function fetchData() {
 }
 
 fetchData()
+
+
+
+
 
 // function createNode(element) {
 // 	return document.createElement(element)

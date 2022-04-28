@@ -69,7 +69,7 @@ Land
 -- SKAPA DATABAS - om det behövs
 -- -------------------------------------------------------------------------------------------------
 
-CREATE DATABASE projekt_filmdatabas;
+create DATABASE projekt_filmdatabas2;
 
 -- -------------------------------------------------------------------------------------------------
 -- SKAPA TABELLER
@@ -171,10 +171,10 @@ INNER JOIN land ON film.filmLandId = land.landId
 INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId
 INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId;
 
+-- SELECT och COUNT för att visa antal filmer i filmtabellen
+
+SELECT COUNT(filmId) AS antalFilmer FROM film;
 
 -- FÖR ATT ANVÄNDA LÖSENORD OSV
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456789';
-
-
-
