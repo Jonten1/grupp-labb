@@ -94,7 +94,7 @@ var en_filmlista = [
   ["Gudfadern", 1, 12, 1, 5],
   ["The Dark Knight", 5, 13, 1, 12],
   ["12 edsvurna män", 1, 14, 1, 13],
-  ["Schidler's list", 1, 15, 1, 14],
+  ["Schindler's list", 1, 15, 1, 14],
 ];
 
 module.exports = fyll_paa_med_filmer;
