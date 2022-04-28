@@ -63,6 +63,8 @@ function nyrecension(event) {
   }
   postData("http://localhost:3000/api/laegg_till_recension").then((data) => {
     console.log(data); // JSON data parsed by `response.json()` call
+
+    //window.location.replace("http://localhost:3000/filmlista.html");
   });
 }
 

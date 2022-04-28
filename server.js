@@ -255,7 +255,6 @@ app.get("/api/antalfilmer", (req, res) => {
   });
 });
 
-
 // #############################################
 // MONGODB
 //
@@ -361,3 +360,15 @@ app.put("/api/uppdatera_recension", (req, res) => {
     }
   );
 });
+
+// OBS OBS OBS OBS
+// #### OBS OBS Avkommentera de nedanstående två raderna för att få en funktion som alltid
+// #### fyller på med minst fem filmer (autentiska från IMDB).
+// #### när man startar om server.js
+// #### -- Men OBS: Den SENASTE versionen av databasens initieringsfiler "SQL-initiering_220421.txt" från idag, 28 april
+// #### måste först läsas in så att rätt data kommer in - annars blir det fel
+// --------------------------------------------------------------
+//
+//const fyll_paa_med_filmer = require("./fyll_paa_med_filmer");
+//fyll_paa_med_filmer();
+//

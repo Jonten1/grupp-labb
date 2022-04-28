@@ -10,6 +10,16 @@ UPPDATERINGAR
 15:59 den 21 april 2022
 -- Lade till NOT NULL på många ställen efter tips från Jerry
 --------------------------------------
+######################################
+14:45 den 28 april 2022
+Obs obs!
+Denna uppdaterade fil behöver köras om från början nu
+för att kunna använda den nya automatiska påfyllnadsfunktionen i node.js
+- Annars finns inte regissörer osv till den automatiska påfyllnaden i tabellerna
+######################################
+
+
+
 
 TODO:
 Vi borde nog uppdatera ER-diagrammet i Figma med aktuella namn här
@@ -63,13 +73,11 @@ Land
 -- -------------------------------------------------------------------------------------------------
 
 
-
-
 -- -------------------------------------------------------------------------------------------------
 -- SKAPA DATABAS - om det behövs
 -- -------------------------------------------------------------------------------------------------
-
-create DATABASE projekt_filmdatabas2;
+drop database projekt_filmdatabas;
+create DATABASE projekt_filmdatabas;
 
 -- -------------------------------------------------------------------------------------------------
 -- SKAPA TABELLER
@@ -82,6 +90,8 @@ landId INT NOT NULL AUTO_INCREMENT,
 landNamn VARCHAR(50) NOT NULL,
 PRIMARY KEY (landID)
 );
+
+select * FROM land;
 
 DROP TABLE huvudrollsinnehavare;
 
@@ -104,6 +114,9 @@ kategoriId INT NOT NULL AUTO_INCREMENT,
 kategoriNamn VARCHAR(50)  NOT NULL,
 PRIMARY KEY (kategoriId)
 );
+
+--  INSERT INTO kategori (kategoriNamn)
+
 
 DROP TABLE film;
 
@@ -128,10 +141,10 @@ FOREIGN KEY (filmRegissoerId) REFERENCES regissoer(regissoerId));
 INSERT INTO kategori(kategoriNamn) VALUES('Drama'), ('Thriller'), ('Komedi'), ('Dokumentär'), ('Action'), ('Science fiction'), ('Skräck');
 SELECT * FROM kategori;
 
-INSERT INTO huvudrollsinnehavare(huvudrollNamn) VALUES('Kate Winslet'),('Charlize Theron'),('Bruce Willis'), ('Sigourney Weaver'),('Catherine Zeta-Jones'), ('Will Smith'), ('Keira Knightley'),('Al Pacino'),('Scarlett Johansson'), ('Sandra Bullock'),('Angelina Jolie'), ('Cameron Diaz');
+INSERT INTO huvudrollsinnehavare(huvudrollNamn) VALUES('Kate Winslet'),('Charlize Theron'),('Bruce Willis'), ('Sigourney Weaver'),('Catherine Zeta-Jones'), ('Will Smith'), ('Keira Knightley'),('Al Pacino'),('Scarlett Johansson'), ('Sandra Bullock'),('Angelina Jolie'), ('Cameron Diaz'), ('Tim Robins'), ('Marlon Brando'), ('Christian Bale'), ('Henry Fonda'), ('Liam Neeson');
 SELECT * FROM huvudrollsinnehavare;
 
-INSERT INTO regissoer(regissoerNamn) VALUES('David Lynch'), ('Stanley Kubrick'), ('Alfred Hitchcock'), ('Martin Scorsese'), ('Francis Ford Coppola'), ('Sergio Leone'), ('Ingmar Bergman'), ('Akira Kurosawa'), ('Tim Burton'), ('Quentin Tarantino');
+INSERT INTO regissoer(regissoerNamn) VALUES('David Lynch'), ('Stanley Kubrick'), ('Alfred Hitchcock'), ('Martin Scorsese'), ('Francis Ford Coppola'), ('Sergio Leone'), ('Ingmar Bergman'), ('Akira Kurosawa'), ('Tim Burton'), ('Quentin Tarantino'), ('Frank Darabont'), ('Christopher Nolan'), ('Sidney Lumet'), ('Steven Spielberg');
 SELECT * FROM regissoer;
 
 INSERT INTO land(landNamn) VALUES('USA'), ('Sverige'), ('Storbritannien'), ('Frankrike'), ('Kanada');
@@ -169,12 +182,13 @@ SELECT film.titel, kategori.kategoriNamn, huvudrollsinnehavare.huvudrollNamn,
 INNER JOIN film ON kategori.kategoriId = film.filmKategoriId
 INNER JOIN land ON film.filmLandId = land.landId
 INNER JOIN huvudrollsinnehavare ON film.filmHuvudrollsinnehavareId = huvudrollsinnehavare.huvudrollId
-INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId;
+INNER JOIN regissoer ON film.filmRegissoerId = regissoer.regissoerId
+WHERE filmId = 1;
 
--- SELECT och COUNT för att visa antal filmer i filmtabellen
+SELECT * from film;
+SELECT * from regissoer;
+-- LÖSENORD OSV
 
-SELECT COUNT(filmId) AS antalFilmer FROM film;
-
--- FÖR ATT ANVÄNDA LÖSENORD OSV
+SELECT * FROM mysql.user;
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456789';
