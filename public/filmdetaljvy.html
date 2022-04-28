@@ -40,7 +40,14 @@
         }
 
         goer_delete_med_fetch();
-        window.location.replace("http://localhost:3000/filmlista.html");
+
+        // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
+        // FÖR DEN TAR TID
+        // I ANDRA WEBBLÄSARE
+        // MÅSTE FIXAS MED settimeout - vid en delete...
+        setTimeout(function () {
+          window.location.replace("http://localhost:3000/filmlista.html");
+        }, 333);
       }
 
       // 				app.delete("/api/delete_filmer", (req, res) => {

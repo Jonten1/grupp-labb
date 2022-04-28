@@ -5,6 +5,14 @@
 //   database: "projekt_filmdatabas",
 // });
 
+//#########################################
+//
+// Funktionalitet här för att alltid fylla på med fem särskilda filmer vid
+// omstart av databasen (server.js).
+// OBS - den senaste SQL-initieringsfilen (fr 28 april) måste läsas in först!
+//
+//#########################################
+
 const fyll_paa_med_filmer = () => {
   const connection = require("./gitignorefolder/connection");
   const mysql = require("mysql");
