@@ -247,7 +247,7 @@ app.get("/api/film_info2/:id", (req, res) => {
   });
 });
 
-app.get("/api/filmlista", (req, res) => {
+app.get("/api/antalfilmer", (req, res) => {
   let sql = "SELECT COUNT(filmId) AS antalFilmer FROM film;";
   connection.query(sql, [req.params.id], function (error, results, fields) {
     if (error) throw error;

@@ -27,6 +27,30 @@ function fetchData() {
 
 fetchData()
 
+function fetchNumberOfFilms() {
+	fetch('http://localhost:3000/api/antalfilmer')
+		.then((response) => {
+			if (!response.ok) {
+				throw Error('ERROR')
+			}
+			return response.json()
+		})
+		.then((data) => {
+			console.log(data)
+			const html = data
+			.map((filmer) => {
+				return `<p>Just nu finns det ${filmer.antalFilmer} filmer i databasen</p>	`
+				//http://localhost:3000/filmdetaljvy.html?id=1
+			})
+			.join('')
+			console.log(html)
+			document.querySelector('#app').insertAdjacentHTML('afterbegin', html)
+		})
+		.catch((error) => {
+			console.log(error)
+		})
+}
+fetchNumberOfFilms()
 
 
 
