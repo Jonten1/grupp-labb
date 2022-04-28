@@ -132,19 +132,10 @@ function posta_ny_film(event) {
   }
 
   posta_data("http://localhost:3000/api/nyfilm")
-
-        // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
-        // FÖR DEN TAR TID
-        // I ANDRA WEBBLÄSARE
-        // MÅSTE FIXAS MED settimeout - vid en delete...
-        setTimeout(function () {
+  setTimeout(function () {
           window.location.replace("http://localhost:3000/filmlista.html");
         }, 333);
-      }
-
-  // .then((data) => {
-  //   console.log(data); // JSON data parsed by `response.json()` call
-  // });
+          
 
 // GÖR OM FETCH, Töm fälten
   function load_js_mm()
