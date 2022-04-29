@@ -1,20 +1,33 @@
+* {
+    font-family: Arial,
+    Helvetica,
+    sans-serif;
+}
+body{
+    background-color: rgb(53, 53, 53);
+}
 .link{
     text-decoration: none;
-    font-size: 50px;
+    font-size: 40px;
     padding-bottom: 5px;
-    color: black;
-    background-color: white;
+    color: rgb(255, 255, 255);
+    background-color: #484545;
     width: 100px;
     display: block;
     font-style: oblique;
+    width: auto;
 }
 .filmer{
     border-bottom: 1px solid black;
     padding-bottom: 5px;
+    color: rgb(255, 255, 255);
+    background-color: #484545;
 }
 h1{
     font-size: 60px;
+    color: rgb(255, 255, 255);
 }
 p{
     font-size: 30px;
+    color: rgb(255, 255, 255);
 }
