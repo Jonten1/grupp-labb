@@ -328,6 +328,20 @@ app.delete("/api/delete_filmer", (req, res) => {
   });
 });
 
+app.delete("/api/delete_recension", (req, res) => {
+  let ft = req.body.filmtitel;
+
+  recensioner.deleteOne(
+    {
+      filmtitel: ft,
+    },
+    (err, result) => {
+      if (err) throw err;
+      res.json({ ok: true });
+    }
+  );
+});
+
 // #############################################
 // MongoDB UPDATE, ÄNDRA EN RECENSION
 //
