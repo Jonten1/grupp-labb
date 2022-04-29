@@ -11,7 +11,7 @@ function fetchData() {
 			const html = data
 				.map((filmer) => {
 					return `<div class="filmer">
-				<a href="http://localhost:3000/filmdetaljvy.html?id=${filmer.filmId}">${filmer.titel}</a>
+				<a class="link" href="http://localhost:3000/filmdetaljvy.html?id=${filmer.filmId}">${filmer.titel}</a>
 				</div>
 				`
 					//http://localhost:3000/filmdetaljvy.html?id=1
@@ -24,30 +24,4 @@ function fetchData() {
 			console.log(error)
 		})
 }
-
 fetchData()
-
-// function createNode(element) {
-// 	return document.createElement(element)
-// }
-
-// function append(parent, el) {
-// 	return parent.appendChild(el)
-// }
-
-// const a = document.getElementById('film')
-// fetch('http://localhost:3000/api/filmer')
-// 	.then((resp) => resp.json())
-// 	.then(function (data) {
-// 		console.log(data)
-// 		console.log('Visa första i json-objektet: ' + data[0].filmId)
-// 		let film = data
-// 		return film.map(function (data) {
-// 			let li = createNode('li')
-// 			li.innerHTML = data.titel
-// 			append(a, li)
-// 		})
-// 	})
-// 	.catch(function (error) {
-// 		console.log(error)
-// 	})
