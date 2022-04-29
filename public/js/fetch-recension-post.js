@@ -18,13 +18,13 @@ function nyrecension(event) {
   let recensionstext = document.querySelector("#rt").value;
   let recensionsbetyg = document.querySelector("#rbetyg").value;
 
-  cl(id);
-  cl(filmtitel);
-  cl(recensionsrubrik);
-  cl(recensionsfoerfattare);
-  cl(recensionsdatum);
-  cl(recensionstext);
-  cl(recensionsbetyg);
+  // cl(id);
+  // cl(filmtitel);
+  // cl(recensionsrubrik);
+  // cl(recensionsfoerfattare);
+  // cl(recensionsdatum);
+  // cl(recensionstext);
+  // cl(recensionsbetyg);
 
   // Example POST method implementation:
   async function postData(url = "", data = {}) {
@@ -63,6 +63,8 @@ function nyrecension(event) {
   }
   postData("http://localhost:3000/api/laegg_till_recension").then((data) => {
     console.log(data); // JSON data parsed by `response.json()` call
+
+    //window.location.replace("http://localhost:3000/filmlista.html");
   });
 }
 

@@ -11,6 +11,72 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+      function ta_bort_film_och_rec() {
+        console.log("Börjar med att ta bort fil fr mySQL: " + g_filmtitel);
+
+        async function goer_delete_med_fetch(url = "", data = {}) {
+          const response = await fetch(
+            "http://localhost:3000/api/delete_filmer",
+            {
+              method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "same-origin", // include, *same-origin, omit
+              headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              redirect: "follow", // manual, *follow, error
+              referrerPolicy: "no-referrer", // no-referrer, *client
+
+              body: JSON.stringify({
+                titel: g_filmtitel,
+              }),
+
+              // document.getElementById("formularet").reset();
+              //  return response.json(); // parses JSON response into native JavaScript objects
+            }
+          );
+        }
+
+        goer_delete_med_fetch();
+
+        // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
+        // FÖR DEN TAR TID
+        // I ANDRA WEBBLÄSARE
+        // MÅSTE FIXAS MED settimeout - vid en delete...
+        setTimeout(function () {
+          window.location.replace("http://localhost:3000/filmlista.html");
+        }, 33);
+      }
+
+      // 				app.delete("/api/delete_filmer", (req, res) => {
+      //   console.log(req.body);
+      //   let sql = "DELETE FROM film WHERE titel = ?";
+      //   connection.query(sql, [req.body.titel], function (error, results, fields) {
+      //     if (error) throw error;
+      //     res.end("Filmen är nu raderad!");
+      //   });
+      // });
+
+      //##############################
+      // MySQL delete
+      // 		Använder g_filmtitel
+      //		/api/delete_filmer
+      // app.delete("/api/books", (req, res) => {
+      //   let bokIsbn = req.body.bokIsbn;
+      //   books.deleteOne(
+      //     {
+      //       isbn: bokIsbn,
+      //     },
+      //     (err, result) => {
+      //       if (err) throw err;
+      //       res.json({ ok: true });
+      //     }
+      //   );
+      // });
+      //}
+
       // Globalt: filmtitel
       var g_filmtitel = "";
 
@@ -64,14 +130,14 @@
             let rs = data.recensioner;
 
             /*
-              id: "35692",
-              filmtitel: "Hajen",
-              foerfattare: "Kalle",
-              datum: 220425,
-              rubrik: "Spännande och lång gammal film",
-              recensionstext: "Rätt spännande ändå.",
-              betyg: 10
-      */
+                    id: "35692",
+                    filmtitel: "Hajen",
+                    foerfattare: "Kalle",
+                    datum: 220425,
+                    rubrik: "Spännande och lång gammal film",
+                    recensionstext: "Rätt spännande ändå.",
+                    betyg: 10
+            */
             let str = "";
             for (i in rs) {
               if (rs[i].recensionstext) {
@@ -164,8 +230,24 @@
       <section style="margin-top: 35px">
         <h3 class="h3">Recensioner</h3>
         <div id="recensionsplats"></div>
+
+        <!--
+	Tar bort detta pga. det som finns ovan /Kenneth
         <input type="text" />
         <input type="submit" value="lägg till recenssion" />
+    -->
+      </section>
+      <hr />
+      <section style="margin-top: 35px; border: 1px solid; padding: 25px">
+        <h3 class="h3">Ta bort filmen</h3>
+        <button
+          value="Ta bort film (och recensioner)"
+          class="btn btn btn-danger"
+          style="margin-top: 15px"
+          onclick="ta_bort_film_och_rec()"
+        >
+          Ta bort film (och recensioner)
+        </button>
       </section>
     </div>
     <script src="js/fetch-recension-post.js"></script>

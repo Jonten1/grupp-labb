@@ -247,6 +247,14 @@ app.get('/api/film_info2/:id', (req, res) => {
 	})
 })
 
+app.get('/api/antalfilmer', (req, res) => {
+	let sql = 'SELECT COUNT(filmId) AS antalFilmer FROM film;'
+	connection.query(sql, [req.params.id], function (error, results, fields) {
+		if (error) throw error
+		res.json(results)
+	})
+})
+
 // #############################################
 // MONGODB
 //
@@ -310,3 +318,57 @@ app.post('/api/laegg_till_recension', (req, res) => {
 		}
 	)
 })
+
+app.delete('/api/delete_filmer', (req, res) => {
+	console.log(req.body)
+	let sql = 'DELETE FROM film WHERE titel = ?'
+	connection.query(sql, [req.body.titel], function (error, results, fields) {
+		if (error) throw error
+		res.end('Filmen är nu raderad!')
+	})
+})
+
+// #############################################
+// MongoDB UPDATE, ÄNDRA EN RECENSION
+//
+
+app.put('/api/uppdatera_recension', (req, res) => {
+	let i = req.body.id
+	let ft = req.body.filmtitel
+	let rr = req.body.recensionsrubrik
+	let rf = req.body.recensionsfoerfattare
+	let rd = req.body.recensionsdatum
+	let rtxt = req.body.recensionstext
+	let b = req.body.recensionsbetyg
+
+	recensioner.updateOne(
+		{ id: i },
+		{
+			$set: {
+				filmtitel: ft,
+				foerfattare: rf,
+				datum: rd,
+				rubrik: rr,
+				recensionstext: rtxt,
+				betyg: b
+			}
+		},
+		(err, result) => {
+			if (err) throw err
+			console.log(result)
+			res.json({ ok: true })
+		}
+	)
+})
+
+// OBS OBS OBS OBS
+// #### OBS OBS Avkommentera de nedanstående två raderna för att få en funktion som alltid
+// #### fyller på med minst fem filmer (autentiska från IMDB).
+// #### när man startar om server.js
+// #### -- Men OBS: Den SENASTE versionen av databasens initieringsfiler "SQL-initiering_220421.txt" från idag, 28 april
+// #### måste vara inlästa så att rätt data kommer in - annars blir det fel
+// --------------------------------------------------------------
+//
+const fyll_paa_med_filmer = require('./fyll_paa_med_filmer')
+fyll_paa_med_filmer()
+//
