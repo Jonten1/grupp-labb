@@ -13,6 +13,8 @@
 //
 //#########################################
 
+// Använder chalk för bättre färger i consolen
+
 const fyll_paa_med_filmer = () => {
   const connection = require("./gitignorefolder/connection");
   const mysql = require("mysql");
@@ -57,13 +59,21 @@ const fyll_paa_med_filmer = () => {
     for (let i = 0; i < en_filmlista.length; i++) {
       if (en_filmlista[i][0] in befintliga_titlar) {
         // #### Om filmtiteln redan finns med: hoppa över
+
         console.log(
-          en_filmlista[i][0] + " ligger redan i databasen, hoppar över"
+          chalk.white.bgRed.bold(
+            en_filmlista[i][0] + " ligger redan i databasen, hoppar över"
+          )
         );
       } else {
         // #### Om filmen ej finns med - lägg till
 
-        console.log(en_filmlista[i][0] + " fanns ej. Lägger till:");
+        console.log(
+          chalk.white.bgGreen.bold(
+            en_filmlista[i][0] + " ligger redan i databasen, hoppar över"
+          )
+        );
+
         let params = [
           en_filmlista[i][0],
           en_filmlista[i][1],
