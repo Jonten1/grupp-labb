@@ -70,7 +70,7 @@ const fyll_paa_med_filmer = () => {
 
         console.log(
           chalk.white.bgGreen.bold(
-            en_filmlista[i][0] + " ligger redan i databasen, hoppar över"
+            en_filmlista[i][0] + " ligger ej i databasen, lägger till"
           )
         );
 
