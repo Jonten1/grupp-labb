@@ -1,0 +1,42 @@
+* {font-family: 'Roboto', sans-serif;}
+
+body{
+  background-color: #282828;
+}
+
+h1, h2, h3, h4 {
+color: #F4F4F4;
+font-style: normal;
+}
+
+b {font-weight: lighter;}
+
+.form-control {
+  background-color:#4E4E4E;
+  border: black 1px solid;
+}
+
+#review-container{
+  background-color: red;
+}
+
+#r-container{
+  padding: 0;
+}
+
+#review-post, #publicerad-recension {
+background-color: #4E4E4E;
+border-radius: 10px;
+}
+
+#recensionsplats{
+  color: red;
+}
+
+.btn {
+  background-color: #F16A6A;
+  border: none;
+  font-size: 16px;
+}
+
+.btn:hover {background:#DF5050;}
