@@ -10,3 +10,12 @@ nav{
     color: white;
     font-size: 15px;
 }
+
+@media (min-width: 980px) {
+    .navlink {
+        font-size: 25px;
+    }
+    nav {
+        font-size: 25px;
+    }
+}
