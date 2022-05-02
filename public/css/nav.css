@@ -1,0 +1,12 @@
+nav{
+    display: flex;
+    list-style: disclosure-closed;
+    justify-content: space-evenly;
+    font-size: 25px;
+}
+.navlink{
+    text-decoration: none;
+    text-decoration-color: currentcolor;
+    color: white;
+    font-size: 25px;
+}

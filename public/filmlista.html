@@ -7,11 +7,27 @@
 		<link rel="shortcut icon" href="#" />
 		<title>Filmlista</title>
 		<link rel="stylesheet" href="css/filmlista.css" />
+		<link rel="stylesheet" href="css/nav.css" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Audiowide"
+		/>
 	</head>
 	<body>
+		<nav>
+			<li><a class="navlink" href="index.html">Hem</a></li>
+			<li><a class="navlink" href="filmlista.html">Filmlista</a></li>
+			<li><a class="navlink" href="nyfilm.html">Lägg till film</a></li>
+		</nav>
 		<h1>Filmer</h1>
 		<p>Klicka på en film för att få mer info om filmen</p>
 		<div id="app"></div>
 		<script src="js/fetch-filmlista.js"></script>
 	</body>
 </html>
+
+<style>
+	body {
+		font-family: 'Audiowide', sans-serif;
+	}
+</style>
