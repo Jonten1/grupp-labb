@@ -2,11 +2,20 @@ nav{
     display: flex;
     list-style: disclosure-closed;
     justify-content: space-evenly;
-    font-size: 25px;
+    font-size: 15px;
 }
 .navlink{
     text-decoration: none;
     text-decoration-color: currentcolor;
     color: white;
-    font-size: 25px;
+    font-size: 15px;
+}
+
+@media (min-width: 980px) {
+    .navlink {
+        font-size: 25px;
+    }
+    nav {
+        font-size: 25px;
+    }
 }
