@@ -59,7 +59,17 @@ function nyrecension(event) {
         //   let b = req.body.recensionsbetyg;
       }), // body data type must match "Content-Type" header
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+
+    console.log(data.titel);
+
+    //visa_recensioner(data.titel);
+    console.log("## " + response.json());
+    // VISA ÄVEN DEN NYA TILLAGDA
+    visa_recensioner(g_filmtitel);
+
+    return response.json();
+
+    // parses JSON response into native JavaScript objects
   }
   postData("http://localhost:3000/api/laegg_till_recension").then((data) => {
     console.log(data); // JSON data parsed by `response.json()` call
