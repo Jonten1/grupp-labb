@@ -343,6 +343,22 @@ app.delete("/api/delete_recension", (req, res) => {
   );
 });
 
+//#####################################
+// TA BORT SAMTLIGA REC MED VISS VILLKOR (NÄMLIGEN ATT DE HÖR TILL EN VISS FILM)
+app.delete("/api/delete_recensioner_till_film", (req, res) => {
+  let ft = req.body.filmtitel;
+
+  recensioner.deleteMany(
+    {
+      filmtitel: ft,
+    },
+    (err, result) => {
+      if (err) throw err;
+      res.json({ ok: true });
+    }
+  );
+});
+
 // #############################################
 // MongoDB UPDATE, ÄNDRA EN RECENSION
 //
