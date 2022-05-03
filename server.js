@@ -360,7 +360,7 @@ app.delete("/api/delete_recensioner_till_film", (req, res) => {
 });
 
 // #############################################
-// MongoDB UPDATE, ÄNDRA EN RECENSION
+// MongoDB UPDATE, ÄNDRA EN RECENSION (används ej i appen)
 //
 
 app.put("/api/uppdatera_recension", (req, res) => {
