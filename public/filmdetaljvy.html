@@ -19,6 +19,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+
+
+
       function ta_bort_film_och_rec() {
         console.log("Börjar med att ta bort fil fr mySQL: " + g_filmtitel);
 
@@ -100,6 +103,8 @@
         }, 33);
       }
 
+      //.........
+
       // 				app.delete("/api/delete_filmer", (req, res) => {
       //   console.log(req.body);
       //   let sql = "DELETE FROM film WHERE titel = ?";
@@ -126,6 +131,8 @@
       //   );
       // });
       //}
+
+      const deleteReview = document.querySelector('#deleteReview')
 
       // Globalt: filmtitel
       var g_filmtitel = "";
@@ -170,6 +177,36 @@
         });
 
       // Gör fetch mot MongoDB-endpointen
+  function delete_review(id){
+    const url = 'http://localhost:3000/api/recension/' + id;
+
+    fetch(url)
+    .then ((resp) => resp.json())
+    .then(function(data){
+      let rs = data.recensioner;
+      for (i in rs) {
+        if (rs[i].recensionstext) {
+
+        }
+      }
+    })
+    .catch(function (error) {
+            console.log(error);
+          });
+// const response = await fetch(url,{
+//   method:'DELETE',
+//   mode:'cors',
+//   cache:'no-cache',
+//   credentials:'same-origin',
+//   headers:{'Content-Type': 'application/json'},
+//   redirect:'follow',
+//   referrerPolicy:'no-referrer',
+//   body: JSON.stringify({})
+// });
+// return response.json();
+
+}
+
       function visa_recensioner(filmnamn) {
         const url = "http://localhost:3000/api/recension/" + filmnamn;
 
@@ -178,23 +215,15 @@
           .then(function (data) {
             console.table(data.recensioner);
             let rs = data.recensioner;
-
-            /*
-                    id: "35692",
-                    filmtitel: "Hajen",
-                    foerfattare: "Kalle",
-                    datum: 220425,
-                    rubrik: "Spännande och lång gammal film",
-                    recensionstext: "Rätt spännande ändå.",
-                    betyg: 10
-            */
             let str = "";
             for (i in rs) {
               if (rs[i].recensionstext) {
                 console.table(rs[i]);
+                console.log(rs[i]._id)
+                console.log(filmnamn)
                 str +=
                   "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
-                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>";
+                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" + "<button id='deleteReview' type='submit' onclick='delete_review()' >test</button>";
                 str +=
                   "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
                 str += rs[i].recensionstext;
@@ -208,7 +237,6 @@
                 str += "</p></div>";
               }
             }
-
             document.querySelector("#recensionsplats").innerHTML = str;
           })
           .catch(function (error) {
@@ -293,7 +321,7 @@
     -->
       </section>
       <hr />
-      
+
         <h3 class="h3">Ta bort filmen</h3>
         <hr />
         <button
