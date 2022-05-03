@@ -1,10 +1,3 @@
-// const fyll_paa_med_filmer = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "123456789",
-//   database: "projekt_filmdatabas",
-// });
-
 //#########################################
 //
 // Funktionalitet här för att alltid fylla på med fem särskilda filmer vid
@@ -24,24 +17,12 @@ const fyll_paa_med_filmer = () => {
 
   const express = require("express");
   const app = express();
-  //const cors = require("cors");
-  //const bodyParser = require("body-parser");
-  //const connection = require("./gitignorefolder/connection");
 
   //app.get("/api/filmer", (req, res) => {
   //
   let sql = "SELECT titel FROM film";
   connection.query(sql, function (err, results, fields) {
     console.table(results);
-
-    //   let sql =
-    //   "INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId) VALUES(?,?,?,?,?)";
-    // let params = [
-    //   req.body.film,
-    //   req.body.kategori,
-    //   req.body.huvudroll,
-    //   req.body.land,
-    //   req.body.regissoer,
 
     //###################################################
     // Sedan lägger vi in nya med INSERT - använd loop för
@@ -85,15 +66,6 @@ const fyll_paa_med_filmer = () => {
         let sql =
           "INSERT INTO film (titel, filmKategoriId, filmHuvudrollsinnehavareId,filmLandId, filmRegissoerId) VALUES(?,?,?,?,?)";
 
-        // VALUES(?,?,?,?,?)";
-        // let params = [
-        // req.body.film,
-        // req.body.kategori,
-        // req.body.huvudroll,
-        // req.body.land,
-        // req.body.regissoer,
-        //];
-
         connection.query(sql, params, function (error, results, fields) {
           if (error) throw error;
         });
@@ -101,13 +73,6 @@ const fyll_paa_med_filmer = () => {
     }
   });
 };
-
-// let params = [
-//   req.body.film,
-//   req.body.kategori,
-//   req.body.huvudroll,
-//   req.body.land,
-//   req.body.regissoer,
 
 var en_filmlista = [
   ["Nyckeln till frihet", 1, 13, 1, 11],

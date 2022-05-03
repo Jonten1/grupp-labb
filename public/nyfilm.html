@@ -34,11 +34,6 @@ function uppdatera_inlagd_info() {
 // DETTA INDEX BEHÖVER EV VETAS FÖR ATT KOPPLA TABELLERNA
 
 
-//<p>FILM: <span id="ftemp"></span></p>
-//<p>LAND <span id="ltemp"></span></p>
-//<p>KATEGORI <span id="ktemp"></span></p>
-//<p>REGISSÖR <span id="rtemp"></span></p>
-//<p>HUVUDROLLSINNEHAVARE <span id="htemp"></span></p>
 }
 document
 .querySelector('#formulaeret')
@@ -48,17 +43,13 @@ document
 
 
 //#########################################
-
-
 const postformularet = document.querySelector("#formulaeret");
 
 // Det jag ska skicka är filmnamn samt tillhörande
 // index för de andra värdena.
 // - Om inget förutom titel är helt nytt i db är det en enkel INSERT
-
 // Men om ngt annat värde är nytt måste jag FÖRST
 // lägga till detta  i annan tabell(-er)- (plus auto-index)
-
 // Sedan gör jag INSERT i 'film' med de de korrekta indexen;
 
 
@@ -71,7 +62,6 @@ function posta_ny_film(event) {
         // UNDERSÖK OM NGT AV: land huvudroll regissör kategori
         // OCKSÅ ÄR NYTT - skicka då med denna info med POST för att skapa SQL
         // separat
-
 
         // Arrayen innehåller vilka tabeller som får helt nya värden på samma gång
         // samt vilket index i aktuell tabell som värdet får
@@ -158,8 +148,6 @@ postformularet.addEventListener("submit", posta_ny_film, false);
 
 })
 
-
-
 //#########################################
 
 
@@ -222,15 +210,7 @@ postformularet.addEventListener("submit", posta_ny_film, false);
     </form>
 
 
-    <!-- <hr />
-<h6 class="h6">Visar aktuellt val och ev index, bara som temp hjälp</h6>
-<section>
-<p>FILM: <span id="ftemp"></span>
-<br/>LAND <span id="ltemp"></span>
-<br/>KATEGORI <span id="ktemp"></span>
-<br/>REGISSÖR <span id="rtemp"></span>
-<br/>HUVUDROLLSINNEHAVARE <span id="htemp"></span></p>
-</section> -->
+
 
 </div>
   </body>
