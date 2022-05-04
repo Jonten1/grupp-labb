@@ -101,7 +101,7 @@
 
 
 
- 
+
 
 
 
@@ -149,12 +149,12 @@
 
       // Gör fetch mot MongoDB-endpointen
 
-      const deleteReview = document.querySelector('#deleteReview')
+      // const deleteReview = document.querySelector('#deleteReview')
 
-      function delete_review(){
-    let dr = deleteReview.value;
+      function delete_review(reviewId){
+        alert(reviewId)
 
-async function deleteData(url = 'http://localhost:3000/api/recension/', data = {}) {
+async function deleteData(url = 'http://localhost:3000/api/delete_recension/', data = {}) {
     const response = await fetch(url, {
         method: 'DELETE',
         mode: 'cors',
@@ -165,12 +165,12 @@ async function deleteData(url = 'http://localhost:3000/api/recension/', data = {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify({dr:dr})
+        body: JSON.stringify({id:reviewId})
     });
     return response.json();
 }
 
-deleteData('http://localhost:3000/api/recension/')
+deleteData('http://localhost:3000/api/delete_recension/')
     .then((data) => {
         console.log(data);
     });
@@ -192,7 +192,7 @@ deleteData('http://localhost:3000/api/recension/')
 
                 str +=
                   "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
-                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" + "<button id='deleteReview' type='submit' onclick='delete_review()' >test</button>";
+                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" + "<button id='deleteReview' type='submit' onclick='delete_review('"+ rs[i].id +"')' >test</button>";
                 str +=
                   "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
                 str += rs[i].recensionstext;
