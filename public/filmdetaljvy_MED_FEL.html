@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="sv">
-
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -20,6 +19,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+      // Globalt: filmtitel
+      var g_filmtitel = "";
       function ta_bort_film_och_rec() {
         console.log("Börjar med att ta bort fil fr mySQL: " + g_filmtitel);
 
@@ -49,7 +50,12 @@
           //########################################
           // TA BORT RECENSIONER I MONGODB
           console.log("Ska ta bort rec för " + g_filmtitel);
-        }
+
+
+          // Visa recensioner när en tagits bort
+setTimeout(
+  ()=> {visa_recensioner(g_filmtitel);}
+,33);
 
         async function goer_delete_med_fetch(url = "", data = {}) {
           const response = await fetch(
@@ -83,15 +89,10 @@
 
         goer_delete_med_fetch();
         ta_bort_filmens_RECENSIONER();
-
         setTimeout(function () {
           window.location.replace("http://localhost:3000/filmlista.html");
         }, 33);
 
-        // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
-        // FÖR DEN TAR TID
-        // I ANDRA WEBBLÄSARE
-        // MÅSTE FIXAS MED settimeout - vid en delete...
 
         // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
         // FÖR DEN TAR TID
@@ -102,35 +103,13 @@
         }, 33);
       }
 
-      // 				app.delete("/api/delete_filmer", (req, res) => {
-      //   console.log(req.body);
-      //   let sql = "DELETE FROM film WHERE titel = ?";
-      //   connection.query(sql, [req.body.titel], function (error, results, fields) {
-      //     if (error) throw error;
-      //     res.end("Filmen är nu raderad!");
-      //   });
-      // });
 
-      //##############################
-      // MySQL delete
-      // 		Använder g_filmtitel
-      //		/api/delete_filmer
-      // app.delete("/api/books", (req, res) => {
-      //   let bokIsbn = req.body.bokIsbn;
-      //   books.deleteOne(
-      //     {
-      //       isbn: bokIsbn,
-      //     },
-      //     (err, result) => {
-      //       if (err) throw err;
-      //       res.json({ ok: true });
-      //     }
-      //   );
-      // });
-      //}
 
-      // Globalt: filmtitel
-      var g_filmtitel = "";
+
+
+
+
+
 
       // parsa url
 
@@ -172,52 +151,8 @@
         });
 
       // Gör fetch mot MongoDB-endpointen
-      function visa_recensioner(filmnamn) {
-        const url = "http://localhost:3000/api/recension/" + filmnamn;
 
-        fetch(url)
-          .then((resp) => resp.json())
-          .then(function (data) {
-            console.table(data.recensioner);
-            let rs = data.recensioner;
-
-            let str = "";
-            for (i in rs) {
-              if (rs[i].recensionstext) {
-                console.table(rs[i]);
-                str +=
-                  "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
-                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>";
-
-
-                str +=
-                  "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
-                str += rs[i].recensionstext;
-
-                str += "<hr><b class='fs-5'>Betyg: ";
-                str +=
-                  rs[i].betyg +
-                  "</b><hr><p class='fs-6'> (Datum: " +
-                  rs[i].datum +
-                  ")</p>";
-
-                  str += "<button   style='color:black;min-height:44px !important; min-width:44px  !important; margin-top: 15px'  onclick='delete_recension(\"" + rs[i].id + "\")'>Ta bort recension</button>";
-
-
-
-
-                str += "</p></div>";
-              }
-            }
-
-            document.querySelector("#recensionsplats").innerHTML = str;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-
-
+      // const deleteReview = document.querySelector('#deleteReview')
 
 //       function delete_review(reviewId){
 //         alert("ID " +reviewId);
@@ -238,40 +173,53 @@
 //     return response.json();
 // }
 
-
-// ######################################
-// Ny för att ta bort en enskild rec
-function delete_recension(reviewId){
-       // alert("ID " +reviewId);
-
-async function deleteData(url = 'http://localhost:3000/api/delete_recension/', data = {}) {
-    const response = await fetch(url, {
-        method: 'DELETE',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify({id:reviewId})
-    });
-    return response.json();
-}
-
- deleteData()//('http://localhost:3000/api/delete_recension/')
+ deleteData('http://localhost:3000/api/delete_recension/')
     .then((data) => {
         console.log(data);
-        
-        setTimeout(() =>{visa_recensioner(g_filmtitel)}, 33)
-        //visa_recensioner(g_filmtitel);
+    });
 
-      });
-    
 }
 
+      function visa_recensioner(filmnamn) {
+        const url = "http://localhost:3000/api/recension/" + filmnamn;
 
+        fetch(url)
+          .then((resp) => resp.json())
+          .then(function (data) {
+            console.table(data.recensioner);
+            let rs = data.recensioner;
+            let str = "";
+            for (i in rs) {
+              if (rs[i].recensionstext) {
+                console.table(rs[i]);
+
+                str +=
+                  "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
+console.log(rs[i].id);
+
+let currentid = rs[i].id;
+alert(currentid);
+                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" //+ "<button id='deleteReview' type='submit' onclick='delete_review(\"" + currentid + "\")' >test</button>";
+                str +=
+                  "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
+                str += rs[i].recensionstext;
+
+                str += "<hr><b class='fs-5'>Betyg: ";
+                str +=
+                  rs[i].betyg +
+                  "</b><hr><p class='fs-6'> (Datum: " +
+                  rs[i].datum +
+                  ")</p>";
+                str += "</p></div>";
+              }
+              console.log(rs[i]._id)
+            }
+            document.querySelector("#recensionsplats").innerHTML = str;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     </script>
 
     <title>Film i databasen</title>
@@ -333,10 +281,7 @@ async function deleteData(url = 'http://localhost:3000/api/delete_recension/', d
               placeholder="Recensionstext"
             ></textarea>
           </div>
-          <button type="submit"
-          
-          
-          class="btn  btn-primary">
+          <button type="submit" class="btn btn-primary">
             Lägg till recension
           </button>
         </form>
@@ -351,26 +296,21 @@ async function deleteData(url = 'http://localhost:3000/api/delete_recension/', d
         <input type="text" />
         <input type="submit" value="lägg till recenssion" />
     -->
+      </section>
+      <hr />
 
-  </section>
-  <hr />
-
-  <h3 class="h3">Ta bort filmen</h3>
-  <hr />
-  <button
-    value="Ta bort film (och recensioner)"
-    class="btn btn-lg btn-danger"
-    style="margin-top: 15px"
-    onclick="ta_bort_film_och_rec()"
-  >
-    Ta bort film (och recensioner)
-  </button>
-</section>
-</div>
-<script src="js/fetch-recension-post.js"></script>
-</body>
-
+        <h3 class="h3">Ta bort filmen</h3>
+        <hr />
+        <button
+          value="Ta bort film (och recensioner)"
+          class="btn btn btn-danger"
+          style="margin-top: 15px"
+          onclick="ta_bort_film_och_rec()"
+        >
+          Ta bort film (och recensioner)
+        </button>
+      </section>
+    </div>
+    <script src="js/fetch-recension-post.js"></script>
+  </body>
 </html>
-
-
-
