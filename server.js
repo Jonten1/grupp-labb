@@ -193,7 +193,7 @@ app.get('/api/filmer', (req, res) => {
 /api/get_kategorier
 */
 /***********************
-GET för de andra tabellerna
+GET för de andra tabellerna ("sidotabellerna")
 **********************/
 // ## LÄNDER
 app.get('/api/get_laender', (req, res) => {
@@ -238,6 +238,7 @@ app.get('/api/film/:id', (req, res) => {
 	})
 })
 
+// #### DEN HÄR ANVÄNDS:
 // DETALJVY 2 - all info i text
 app.get('/api/film_info2/:id', (req, res) => {
 	let sql =
@@ -257,7 +258,7 @@ app.get('/api/antalfilmer', (req, res) => {
 })
 
 // #############################################
-// MONGODB
+// MONGODB GET ALLA
 //
 app.get('/api/alla_recensioner', (req, res) => {
 	recensioner.find().toArray((err, items) => {
@@ -266,6 +267,7 @@ app.get('/api/alla_recensioner', (req, res) => {
 	})
 })
 
+// #############################################
 // HÄMTA RECENSIONER FÖR VISS FILM
 app.get('/api/recension/:filmnamn', (req, res) => {
 	let filmtitel2 = req.params.filmnamn
@@ -319,7 +321,7 @@ app.post('/api/laegg_till_recension', (req, res) => {
 		}
 	)
 })
-
+// #############################################
 app.delete('/api/delete_filmer', (req, res) => {
 	console.log(req.body)
 	let sql = 'DELETE FROM film WHERE titel = ?'
@@ -328,11 +330,49 @@ app.delete('/api/delete_filmer', (req, res) => {
 		res.end('Filmen är nu raderad!')
 	})
 })
-
+// #############################################
 app.delete('/api/delete_recension', (req, res) => {
-	let ft = req.body.filmtitel
+	let id1 = req.body.id
 
 	recensioner.deleteOne(
+		{
+			id: id1
+		},
+		(err, result) => {
+			if (err) throw err
+			res.json({ ok: true })
+		}
+	)
+})
+
+// app.delete("/api/delete_recension/:id", (req, res) => {
+//   let id = req.params.id
+
+//   recensioner.deleteOne({
+//       _id: ObjectId(id)
+//   }, (err, result) => {
+//       if (err) throw err
+//       res.json({ ok: true })
+//   })
+// })
+
+app.delete('/api/recension/:id', async (req, res) => {
+	let id = req.params.id
+	try {
+		const result = await recensioner.deleteOne({ _id: ObjectId(id) })
+		res.send(result)
+	} catch (error) {
+		console.log('error')
+	}
+})
+
+//#####################################
+// TA BORT SAMTLIGA REC MED VISS VILLKOR (NÄMLIGEN ATT DE HÖR TILL EN VISS FILM)
+//
+app.delete('/api/delete_recensioner_till_film', (req, res) => {
+	let ft = req.body.filmtitel
+
+	recensioner.deleteMany(
 		{
 			filmtitel: ft
 		},
@@ -344,7 +384,7 @@ app.delete('/api/delete_recension', (req, res) => {
 })
 
 // #############################################
-// MongoDB UPDATE, ÄNDRA EN RECENSION
+// MongoDB UPDATE, ÄNDRA EN RECENSION (används ej i appen)
 //
 
 app.put('/api/uppdatera_recension', (req, res) => {
@@ -355,6 +395,8 @@ app.put('/api/uppdatera_recension', (req, res) => {
 	let rd = req.body.recensionsdatum
 	let rtxt = req.body.recensionstext
 	let b = req.body.recensionsbetyg
+
+	console.table(req.body)
 
 	recensioner.updateOne(
 		{ id: i },
@@ -385,5 +427,6 @@ app.put('/api/uppdatera_recension', (req, res) => {
 // --------------------------------------------------------------
 //
 const fyll_paa_med_filmer = require('./fyll_paa_med_filmer')
+const { ObjectId } = require('mongodb')
 fyll_paa_med_filmer()
 //

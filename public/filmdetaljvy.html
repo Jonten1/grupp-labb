@@ -1,271 +1,312 @@
 <!DOCTYPE html>
 <html lang="sv">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="css/filmdetaljvy.css" />
-		<link rel="stylesheet" href="css/nav.css" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
-			rel="stylesheet"
-		/>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/filmdetaljvy.css" />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-		<script>
-			function ta_bort_film_och_rec() {
-				console.log('Börjar med att ta bort fil fr mySQL: ' + g_filmtitel)
+    <script>
 
-				async function goer_delete_med_fetch(url = '', data = {}) {
-					const response = await fetch(
-						'http://localhost:3000/api/delete_filmer',
-						{
-							method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-							mode: 'cors', // no-cors, *cors, same-origin
-							cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-							credentials: 'same-origin', // include, *same-origin, omit
-							headers: {
-								'Content-Type': 'application/json'
-								// 'Content-Type': 'application/x-www-form-urlencoded',
-							},
-							redirect: 'follow', // manual, *follow, error
-							referrerPolicy: 'no-referrer', // no-referrer, *client
 
-							body: JSON.stringify({
-								titel: g_filmtitel
-							})
 
-							// document.getElementById("formularet").reset();
-							//  return response.json(); // parses JSON response into native JavaScript objects
-						}
-					)
-				}
+      function ta_bort_film_och_rec() {
+        console.log("Börjar med att ta bort fil fr mySQL: " + g_filmtitel);
 
-				goer_delete_med_fetch()
+        async function ta_bort_filmens_RECENSIONER(url = "", data = {}) {
+          const response = await fetch(
+            "http://localhost:3000/api/delete_recensioner_till_film",
+            {
+              method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "same-origin", // include, *same-origin, omit
+              headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              redirect: "follow", // manual, *follow, error
+              referrerPolicy: "no-referrer", // no-referrer, *client
 
-				// TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
-				// FÖR DEN TAR TID
-				// I ANDRA WEBBLÄSARE
-				// MÅSTE FIXAS MED settimeout - vid en delete...
-				setTimeout(function () {
-					window.location.replace('http://localhost:3000/filmlista.html')
-				}, 33)
-			}
+              body: JSON.stringify({
+                filmtitel: g_filmtitel,
+              }),
+              // document.getElementById("formularet").reset();
+              //  return response.json(); // parses JSON response into native JavaScript objects
+            }
+          );
 
-			// 				app.delete("/api/delete_filmer", (req, res) => {
-			//   console.log(req.body);
-			//   let sql = "DELETE FROM film WHERE titel = ?";
-			//   connection.query(sql, [req.body.titel], function (error, results, fields) {
-			//     if (error) throw error;
-			//     res.end("Filmen är nu raderad!");
-			//   });
-			// });
+          //########################################
+          // TA BORT RECENSIONER I MONGODB
+          console.log("Ska ta bort rec för " + g_filmtitel);
+        }
 
-			//##############################
-			// MySQL delete
-			// 		Använder g_filmtitel
-			//		/api/delete_filmer
-			// app.delete("/api/books", (req, res) => {
-			//   let bokIsbn = req.body.bokIsbn;
-			//   books.deleteOne(
-			//     {
-			//       isbn: bokIsbn,
-			//     },
-			//     (err, result) => {
-			//       if (err) throw err;
-			//       res.json({ ok: true });
-			//     }
-			//   );
-			// });
-			//}
+        async function goer_delete_med_fetch(url = "", data = {}) {
+          const response = await fetch(
+            "http://localhost:3000/api/delete_filmer",
+            {
+              method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+              mode: "cors", // no-cors, *cors, same-origin
+              cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+              credentials: "same-origin", // include, *same-origin, omit
+              headers: {
+                "Content-Type": "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              redirect: "follow", // manual, *follow, error
+              referrerPolicy: "no-referrer", // no-referrer, *client
 
-			// Globalt: filmtitel
-			var g_filmtitel = ''
+              body: JSON.stringify({
+                titel: g_filmtitel,
+              }),
 
-			// parsa url
+              // document.getElementById("formularet").reset();
+              //  return response.json(); // parses JSON response into native JavaScript objects
+            }
+          );
 
-			const params = new URLSearchParams(window.location.search)
-			const filmens_id = params.get('id')
-			console.log('Hämtar denna film: ' + filmens_id)
+          //########################################
+          // TA BORT RECENSIONER I MONGODB
 
-			//const ul = document.getElementById('film')
-			const url = 'http://localhost:3000/api/film_info2/' + filmens_id
-			fetch(url)
-				.then((resp) => resp.json())
-				.then(function (data) {
-					console.log(data)
-					console.log('Visa första i json-objektet: ' + data[0].titel)
-					let film = data
-					return film.map(function (data) {
-						console.table(data)
+          console.log("Ska ta bort rec för " + g_filmtitel);
+        }
 
-						// Visa data på sidan
-						document.querySelector('#ftitel').innerHTML =
-							data.titel + ' (' + data.kategoriNamn + ') '
+        goer_delete_med_fetch();
+        ta_bort_filmens_RECENSIONER();
+        setTimeout(function () {
+          window.location.replace("http://localhost:3000/filmlista.html");
+        }, 33);
 
-						// Spara titeln globalt, bra för recensioner
-						g_filmtitel = data.titel
 
-						//document.querySelector("#fk").innerHTML = data.kategoriNamn;
-						document.querySelector('#fr').innerHTML = data.regissoerNamn
-						document.querySelector('#fh').innerHTML = data.huvudrollNamn
-						document.querySelector('#fl').innerHTML = data.landNamn
+        // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
+        // FÖR DEN TAR TID
+        // I ANDRA WEBBLÄSARE
+        // MÅSTE FIXAS MED settimeout - vid en delete...
+        setTimeout(function () {
+          window.location.replace("http://localhost:3000/filmlista.html");
+        }, 33);
+      }
 
-						// ------------------------------------------------------------------------------------
-						// Visa sedan recensioner för filmen i fråga genom att fetcha
-						// från MongoDB med filmens titel.
-						//
-						//
-						//
-						visa_recensioner(data.titel)
-					})
-				})
 
-			// Gör fetch mot MongoDB-endpointen
-			function visa_recensioner(filmnamn) {
-				const url = 'http://localhost:3000/api/recension/' + filmnamn
 
-				fetch(url)
-					.then((resp) => resp.json())
-					.then(function (data) {
-						console.table(data.recensioner)
-						let rs = data.recensioner
 
-						/*
-                    id: "35692",
-                    filmtitel: "Hajen",
-                    foerfattare: "Kalle",
-                    datum: 220425,
-                    rubrik: "Spännande och lång gammal film",
-                    recensionstext: "Rätt spännande ändå.",
-                    betyg: 10
-            */
-						let str = ''
-						for (i in rs) {
-							if (rs[i].recensionstext) {
-								console.table(rs[i])
-								str +=
-									"<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>"
-								str += rs[i].rubrik + '</b><i> - ' + rs[i].foerfattare + '</i>'
-								str +=
-									"</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>"
-								str += rs[i].recensionstext
 
-								str += "<hr><b class='fs-5'>Betyg: "
-								str +=
-									rs[i].betyg +
-									"</b><hr><p class='fs-6'> (Datum: " +
-									rs[i].datum +
-									')</p>'
-								str += '</p></div>'
-							}
-						}
 
-						document.querySelector('#recensionsplats').innerHTML = str
-					})
-					.catch(function (error) {
-						console.log(error)
-					})
-			}
-		</script>
 
-		<title>Film i databasen</title>
-	</head>
-	<body>
-		<nav>
-			<li><a class="navlink" href="index.html">Hem</a></li>
-			<li><a class="navlink" href="filmlista.html">Filmlista</a></li>
-			<li><a class="navlink" href="nyfilm.html">Lägg till film</a></li>
-		</nav>
-		<div class="container p-5 my-5">
-			<b
-				><i><h1 id="ftitel"></h1></i
-			></b>
-			<hr />
-			<h4 class="h4"><b>Regissör</b></h4>
-			<h4 class="h4" id="fr"></h4>
-			<hr />
-			<h4 class="h4"><b>Huvudrollsinnehavare</b></h4>
-			<h4 class="h4" id="fh"></h4>
-			<hr />
-			<h4 class="h4"><b>Land</b></h4>
-			<h4 class="h4" id="fl"></h4>
-			<hr / style="margin-bottom: 35px">
+      // Globalt: filmtitel
+      var g_filmtitel = "";
 
-			<div class="container mt-3" id="r-container">
-				<h2>Skriv en recension</h2>
-				<p></p>
-				<form id="recensionsformulaeret">
-					<div class="mb-3 mt-3">
-						<label for="rnamn">Namn</label>
-						<input
-							id="rnamn"
-							type="text"
-							class="form-control form-control-lg"
-							placeholder="Namn"
-						/>
-						<label for="rrubrik">Rubrik</label>
-						<input
-							id="rrubrik"
-							type="text"
-							class="form-control form-control-lg"
-							placeholder="Rubrik"
-						/>
-						<label for="rbetyg">Betyg (1-10)</label>
-						<input
-							id="rbetyg"
-							type="text"
-							class="form-control form-control-lg"
-							placeholder="Betyg"
-						/>
+      // parsa url
 
-						<label for="rt">Min recension</label>
-						<textarea
-							class="form-control"
-							rows="5"
-							id="rt"
-							name="text"
-							placeholder="Recensionstext"
-						></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">
-						Lägg till recension
-					</button>
-				</form>
-			</div>
+      const params = new URLSearchParams(window.location.search);
+      const filmens_id = params.get("id");
+      console.log("Hämtar denna film: " + filmens_id);
 
-			<section style="margin-top: 35px">
-				<h3 class="h3">Recensioner</h3>
-				<div id="recensionsplats"></div>
+      //const ul = document.getElementById('film')
+      const url = "http://localhost:3000/api/film_info2/" + filmens_id;
+      fetch(url)
+        .then((resp) => resp.json())
+        .then(function (data) {
+          console.log(data);
+          console.log("Visa första i json-objektet: " + data[0].titel);
+          let film = data;
+          return film.map(function (data) {
+            console.table(data);
 
-				<!--
+            // Visa data på sidan
+            document.querySelector("#ftitel").innerHTML =
+              data.titel + " (" + data.kategoriNamn + ") ";
+
+            // Spara titeln globalt, bra för recensioner
+            g_filmtitel = data.titel;
+
+            //document.querySelector("#fk").innerHTML = data.kategoriNamn;
+            document.querySelector("#fr").innerHTML = data.regissoerNamn;
+            document.querySelector("#fh").innerHTML = data.huvudrollNamn;
+            document.querySelector("#fl").innerHTML = data.landNamn;
+
+            // ------------------------------------------------------------------------------------
+            // Visa sedan recensioner för filmen i fråga genom att fetcha
+            // från MongoDB med filmens titel.
+            //
+            //
+            //
+            visa_recensioner(data.titel);
+          });
+        });
+
+      // Gör fetch mot MongoDB-endpointen
+
+      // const deleteReview = document.querySelector('#deleteReview')
+
+      function delete_review(reviewId){
+        alert("ID " +reviewId);
+
+async function deleteData(url = 'http://localhost:3000/api/delete_recension/', data = {}) {
+    const response = await fetch(url, {
+        method: 'DELETE',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify({id:reviewId})
+    });
+    return response.json();
+}
+
+deleteData('http://localhost:3000/api/delete_recension/')
+    .then((data) => {
+        console.log(data);
+    });
+
+}
+
+      function visa_recensioner(filmnamn) {
+        const url = "http://localhost:3000/api/recension/" + filmnamn;
+
+        fetch(url)
+          .then((resp) => resp.json())
+          .then(function (data) {
+            console.table(data.recensioner);
+            let rs = data.recensioner;
+            let str = "";
+            for (i in rs) {
+              if (rs[i].recensionstext) {
+                console.table(rs[i]);
+
+                str +=
+                  "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
+console.log(rs[i].id);
+
+
+                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" + "<button id='deleteReview' type='submit' onclick='delete_review(\""+ rs[i].id +"\")' >test</button>";
+                str +=
+                  "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
+                str += rs[i].recensionstext;
+
+                str += "<hr><b class='fs-5'>Betyg: ";
+                str +=
+                  rs[i].betyg +
+                  "</b><hr><p class='fs-6'> (Datum: " +
+                  rs[i].datum +
+                  ")</p>";
+                str += "</p></div>";
+              }
+              console.log(rs[i]._id)
+            }
+            document.querySelector("#recensionsplats").innerHTML = str;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    </script>
+
+    <title>Film i databasen</title>
+  </head>
+  <body>
+    <nav>
+      <li><a class="navlink" href="index.html">Hem</a></li>
+      <li><a class="navlink" href="filmlista.html">Filmlista</a></li>
+      <li><a class="navlink" href="nyfilm.html">Lägg till film</a></li>
+    </nav>
+    <div class="container p-5 my-5">
+      <b
+        ><i><h1 id="ftitel"></h1></i
+      ></b>
+      <hr />
+      <h4 class="h4"><b>Regissör</b></h4>
+      <h4 class="h4" id="fr"></h4>
+      <hr />
+      <h4 class="h4"><b>Huvudrollsinnehavare</b></h4>
+      <h4 class="h4" id="fh"></h4>
+      <hr />
+      <h4 class="h4"><b>Land</b></h4>
+      <h4 class="h4" id="fl"></h4>
+      <hr / style="margin-bottom: 35px">
+
+      <div class="container mt-3" id="r-container">
+        <h2>Skriv en recension</h2>
+        <p></p>
+        <form id="recensionsformulaeret">
+          <div class="mb-3 mt-3">
+            <label for="rnamn">Namn</label>
+            <input
+              id="rnamn"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Namn"
+            />
+            <label for="rrubrik">Rubrik</label>
+            <input
+              id="rrubrik"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Rubrik"
+            />
+            <label for="rbetyg">Betyg (1-10)</label>
+            <input
+              id="rbetyg"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Betyg"
+            />
+
+            <label for="rt">Min recension</label>
+            <textarea
+              class="form-control"
+              rows="5"
+              id="rt"
+              name="text"
+              placeholder="Recensionstext"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Lägg till recension
+          </button>
+        </form>
+      </div>
+
+      <section style="margin-top: 35px">
+        <h3 class="h3">Recensioner</h3>
+        <div id="recensionsplats"></div>
+
+        <!--
 	Tar bort detta pga. det som finns ovan /Kenneth
         <input type="text" />
         <input type="submit" value="lägg till recenssion" />
     -->
-			</section>
-			<hr />
-			<section
-				id="review-post"
-				style="margin-top: 35px; border: 1px solid; padding: 25px"
-			>
-				<h3 class="h3">Ta bort filmen</h3>
-				<button
-					value="Ta bort film (och recensioner)"
-					class="btn btn btn-danger"
-					style="margin-top: 15px"
-					onclick="ta_bort_film_och_rec()"
-				>
-					Ta bort film (och recensioner)
-				</button>
-			</section>
-		</div>
-		<script src="js/fetch-recension-post.js"></script>
-	</body>
+      </section>
+      <hr />
+
+        <h3 class="h3">Ta bort filmen</h3>
+        <hr />
+        <button
+          value="Ta bort film (och recensioner)"
+          class="btn btn btn-danger"
+          style="margin-top: 15px"
+          onclick="ta_bort_film_och_rec()"
+        >
+          Ta bort film (och recensioner)
+        </button>
+      </section>
+    </div>
+    <script src="js/fetch-recension-post.js"></script>
+  </body>
 </html>
