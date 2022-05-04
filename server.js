@@ -332,11 +332,11 @@ app.delete("/api/delete_filmer", (req, res) => {
 });
 // #############################################
 app.delete("/api/delete_recension", (req, res) => {
-  let ft = req.body.filmtitel;
+  let id1 = req.body.id;
 
   recensioner.deleteOne(
     {
-      filmtitel: ft,
+      id: id1,
     },
     (err, result) => {
       if (err) throw err;
@@ -357,14 +357,14 @@ app.delete("/api/delete_recension", (req, res) => {
 // })
 
 app.delete("/api/recension/:id", async (req, res) => {
-  let id = req.params.id
-try {
-const result = await recensioner.deleteOne({_id:ObjectId(id)})
-res.send(result)
-} catch (error) {
-console.log('error');
-}
-})
+  let id = req.params.id;
+  try {
+    const result = await recensioner.deleteOne({ _id: ObjectId(id) });
+    res.send(result);
+  } catch (error) {
+    console.log("error");
+  }
+});
 
 //#####################################
 // TA BORT SAMTLIGA REC MED VISS VILLKOR (NÄMLIGEN ATT DE HÖR TILL EN VISS FILM)
