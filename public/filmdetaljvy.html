@@ -189,7 +189,6 @@ deleteData('http://localhost:3000/api/recension/')
             for (i in rs) {
               if (rs[i].recensionstext) {
                 console.table(rs[i]);
-                console.log(rs[i]._id)
 
                 str +=
                   "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
@@ -206,7 +205,7 @@ deleteData('http://localhost:3000/api/recension/')
                   ")</p>";
                 str += "</p></div>";
               }
-
+              console.log(rs[i]._id)
             }
             document.querySelector("#recensionsplats").innerHTML = str;
           })
