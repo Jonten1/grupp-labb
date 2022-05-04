@@ -132,7 +132,7 @@
       // });
       //}
 
-      const deleteReview = document.querySelector('#deleteReview')
+
 
       // Globalt: filmtitel
       var g_filmtitel = "";
@@ -177,33 +177,32 @@
         });
 
       // Gör fetch mot MongoDB-endpointen
-  function delete_review(id){
-    const url = 'http://localhost:3000/api/recension/' + id;
 
-    fetch(url)
-    .then ((resp) => resp.json())
-    .then(function(data){
-      let rs = data.recensioner;
-      for (i in rs) {
-        if (rs[i].recensionstext) {
+      const deleteReview = document.querySelector('#deleteReview')
 
-        }
-      }
-    })
-    .catch(function (error) {
-            console.log(error);
-          });
-// const response = await fetch(url,{
-//   method:'DELETE',
-//   mode:'cors',
-//   cache:'no-cache',
-//   credentials:'same-origin',
-//   headers:{'Content-Type': 'application/json'},
-//   redirect:'follow',
-//   referrerPolicy:'no-referrer',
-//   body: JSON.stringify({})
-// });
-// return response.json();
+      function delete_review(){
+    let dr = deleteReview.value;
+
+async function deleteData(url = 'http://localhost:3000/api/recension/', data = {}) {
+    const response = await fetch(url, {
+        method: 'DELETE',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify({dr:dr})
+    });
+    return response.json();
+}
+
+deleteData('http://localhost:3000/api/recension/')
+    .then((data) => {
+        console.log(data);
+    });
 
 }
 
@@ -220,7 +219,7 @@
               if (rs[i].recensionstext) {
                 console.table(rs[i]);
                 console.log(rs[i]._id)
-                console.log(filmnamn)
+
                 str +=
                   "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
                 str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" + "<button id='deleteReview' type='submit' onclick='delete_review()' >test</button>";
@@ -236,6 +235,7 @@
                   ")</p>";
                 str += "</p></div>";
               }
+
             }
             document.querySelector("#recensionsplats").innerHTML = str;
           })
