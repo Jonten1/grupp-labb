@@ -152,7 +152,7 @@
       // const deleteReview = document.querySelector('#deleteReview')
 
       function delete_review(reviewId){
-        alert(reviewId)
+        alert("ID " +reviewId);
 
 async function deleteData(url = 'http://localhost:3000/api/delete_recension/', data = {}) {
     const response = await fetch(url, {
@@ -192,7 +192,10 @@ deleteData('http://localhost:3000/api/delete_recension/')
 
                 str +=
                   "<div id='publicerad-recension' class='container p-4 my-5 text-white'><h3 class='h3'><b>";
-                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" + "<button id='deleteReview' type='submit' onclick='delete_review('"+ rs[i].id +"')' >test</button>";
+console.log(rs[i].id);
+
+
+                str += rs[i].rubrik + "</b><i> - " + rs[i].foerfattare + "</i>" + "<button id='deleteReview' type='submit' onclick='delete_review(\""+ rs[i].id +"\")' >test</button>";
                 str +=
                   "</h3><p  class='fs-3' style='margin-top:25px;margin-bottom:25px'>";
                 str += rs[i].recensionstext;
