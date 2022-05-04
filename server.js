@@ -332,11 +332,11 @@ app.delete("/api/delete_filmer", (req, res) => {
 });
 // #############################################
 app.delete("/api/delete_recension", (req, res) => {
-  let ft = req.body.filmtitel;
+  let id1  = req.body.id;
 
   recensioner.deleteOne(
     {
-      filmtitel: ft,
+      id: id1,
     },
     (err, result) => {
       if (err) throw err;
