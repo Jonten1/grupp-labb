@@ -347,7 +347,7 @@ app.delete("/api/delete_recension", (req, res) => {
 
 //#####################################
 // TA BORT SAMTLIGA REC MED VISS VILLKOR (NÄMLIGEN ATT DE HÖR TILL EN VISS FILM)
-// Den här används
+//
 app.delete("/api/delete_recensioner_till_film", (req, res) => {
   let ft = req.body.filmtitel;
 

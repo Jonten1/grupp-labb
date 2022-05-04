@@ -86,10 +86,6 @@
           window.location.replace("http://localhost:3000/filmlista.html");
         }, 33);
 
-        // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
-        // FÖR DEN TAR TID
-        // I ANDRA WEBBLÄSARE
-        // MÅSTE FIXAS MED settimeout - vid en delete...
 
         // TYDLIGEN FUNKAR DET INTE MED UPPDATERINGEN SÅ AT DEN SYNS DIREKT
         // FÖR DEN TAR TID
@@ -100,32 +96,9 @@
         }, 33);
       }
 
-      // 				app.delete("/api/delete_filmer", (req, res) => {
-      //   console.log(req.body);
-      //   let sql = "DELETE FROM film WHERE titel = ?";
-      //   connection.query(sql, [req.body.titel], function (error, results, fields) {
-      //     if (error) throw error;
-      //     res.end("Filmen är nu raderad!");
-      //   });
-      // });
 
-      //##############################
-      // MySQL delete
-      // 		Använder g_filmtitel
-      //		/api/delete_filmer
-      // app.delete("/api/books", (req, res) => {
-      //   let bokIsbn = req.body.bokIsbn;
-      //   books.deleteOne(
-      //     {
-      //       isbn: bokIsbn,
-      //     },
-      //     (err, result) => {
-      //       if (err) throw err;
-      //       res.json({ ok: true });
-      //     }
-      //   );
-      // });
-      //}
+
+ 
 
       // Globalt: filmtitel
       var g_filmtitel = "";
