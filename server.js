@@ -345,6 +345,27 @@ app.delete("/api/delete_recension", (req, res) => {
   );
 });
 
+// app.delete("/api/delete_recension/:id", (req, res) => {
+//   let id = req.params.id
+
+//   recensioner.deleteOne({
+//       _id: ObjectId(id)
+//   }, (err, result) => {
+//       if (err) throw err
+//       res.json({ ok: true })
+//   })
+// })
+
+app.delete("/api/recension/:id", async (req, res) => {
+  let id = req.params.id
+try {
+const result = await recensioner.deleteOne({_id:ObjectId(id)})
+res.send(result)
+} catch (error) {
+console.log('error');
+}
+})
+
 //#####################################
 // TA BORT SAMTLIGA REC MED VISS VILLKOR (NÄMLIGEN ATT DE HÖR TILL EN VISS FILM)
 //
@@ -406,5 +427,6 @@ app.put("/api/uppdatera_recension", (req, res) => {
 // --------------------------------------------------------------
 //
 const fyll_paa_med_filmer = require("./fyll_paa_med_filmer");
+const { ObjectId } = require("mongodb");
 fyll_paa_med_filmer();
 //
